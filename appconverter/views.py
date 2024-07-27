@@ -44,3 +44,8 @@ def download_video_view(request):
             return response
         except ValueError as e:
             return JsonResponse({'error': str(e)}, status=400)
+        
+def termos_uso(request):
+    
+    return render(request, 'termos.html')  
+        

@@ -1,5 +1,3 @@
-/* styles.css */
-
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
@@ -9,13 +7,20 @@ body {
     color: #333;
 }
 
-h1 {
-    text-align: center;
-    margin: 20px 0;
+h1, h2 {
     color: #333;
 }
 
-form {
+.navbar-brand {
+    font-weight: bold;
+}
+
+/* Define o fundo do nav como branco */
+.navbar {
+    background-color: #ffffff; /* Branco */
+}
+
+.form-inline {
     max-width: 600px;
     margin: 0 auto;
     padding: 20px;
@@ -24,73 +29,80 @@ form {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-form p {
-    margin: 15px 0;
-}
-
-button {
-    display: inline-block;
-    padding: 10px 20px;
-    margin-top: 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
 #videoInfo {
-    max-width: 600px;
+    max-width: 800px;
     margin: 20px auto;
     padding: 20px;
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Centraliza o texto dentro da div */
 }
 
-#videoInfo h2 {
-    margin-top: 0;
+#videoInfo .row {
+    justify-content: center; /* Centraliza o conteúdo da coluna dentro da linha */
 }
 
-#thumbnail {
-    display: block;
-    margin: 0 auto;
-    border-radius: 8px;
+#videoInfo .col-md-8 {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza os itens dentro da coluna */
 }
 
-#formats {
-    margin-top: 20px;
+#videoInfo img {
+    max-width: 100%; /* Garante que a imagem não ultrapasse a largura da coluna */
+    height: auto;
 }
 
-#formats h3 {
+.btn-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 20px;
     margin-bottom: 10px;
 }
 
-#formats ul {
-    list-style: none;
-    padding: 0;
+#formatSelector {
+    max-width: 300px;
+    margin: 0 auto;
 }
 
-#formats li {
-    margin: 10px 0;
+#downloadButton {
+    display: block;
+    margin: 20px auto; /* Espaçamento vertical */
 }
 
-#formats button {
-    display: inline-block;
-    padding: 8px 15px;
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
+/* Ajustar a largura do campo de input no desktop */
+@media (min-width: 768px) {
+    #videoForm .input-group {
+        width: 100%; /* Ocupa toda a largura da div */
+    }
 }
 
-#formats button:hover {
-    background-color: #218838;
+/* Estilizar o botão de busca */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary i {
+    margin-right: 5px;
+}
+
+/* Estilizar o botão de download */
+#downloadButton {
+    background-color: #007bff; /* Azul */
+    border-color: #007bff;
+}
+
+#downloadButton i {
+    margin-right: 5px;
+}
+
+.form-text.text-muted.mt-2 a {
+    text-decoration: none; /* Remove o sublinhado por padrão */
+}
+
+.form-text.text-muted.mt-2 a:hover {
+    text-decoration: none; /* Remove o sublinhado ao passar o mouse */
 }

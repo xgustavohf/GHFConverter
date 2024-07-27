@@ -3,7 +3,7 @@ import os
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 
@@ -66,7 +66,7 @@ WSGI_APPLICATION = 'ghfconverter.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
+'''DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'tarifador',
@@ -75,8 +75,14 @@ DATABASES = {
         'HOST': 'dpg-cq67uacs1f4s73du3in0-a.oregon-postgres.render.com',
         'PORT': '5432',
     }
-}
+}'''
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / "db.sqlite3",
+    }
+}
 
 
 

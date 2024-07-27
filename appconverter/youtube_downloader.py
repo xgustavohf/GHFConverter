@@ -21,9 +21,10 @@ def get_video_info(url):
 
 def download_video(url, format_id):
     ydl_opts = {
-        'format': format_id,
+        'format': f'{format_id}+bestaudio/best',  # Baixar o melhor áudio disponível
         'outtmpl': 'media/%(title)s.%(ext)s',  # Salvar na pasta media
-        'noplaylist': True
+        'noplaylist': True,
+        'merge_output_format': 'mp4',  # Garantir que o arquivo resultante seja em formato mp4
     }
     
     try:

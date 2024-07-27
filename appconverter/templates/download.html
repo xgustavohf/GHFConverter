@@ -4,28 +4,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Download de Vídeos do YouTube</title>
+    <title>GHFConvert</title>
+    <link rel="icon" href="{% static 'images/ghfconvert.ico' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'images/ghfconvert.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        /* Define o fundo do nav como branco */
+        .navbar {
+            background-color: #ffffff; /* Branco */
+        }
+    </style>
 </head>
 <body>
-    <h1>Baixar Vídeo do YouTube</h1>
-    <form id="videoForm" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Buscar Informações</button>
-    </form>
-    
-    <div id="videoInfo" style="display: none;">
-        <h2>Informações do Vídeo</h2>
-        <img id="thumbnail" src="" alt="Thumbnail" style="max-width: 300px;">
-        <div id="formats"></div>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="/"><span style="color: rgb(3, 142, 255);">GHF</span>Convert</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">YouTube <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Facebook</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Instagram</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container text-center mt-5">
+        <h1 class="display-4">Baixador de vídeo do <span style="color: rgb(3, 142, 255);">YouTube</span></h1>
+        <p class="lead">Baixe e salve vídeos do YouTube gratuitamente</p>
+        <form id="videoForm" method="post" class="form-inline justify-content-center mt-4">
+            {% csrf_token %}
+            <div class="input-group w-100">
+                <input type="text" name="url" class="form-control" placeholder="https://www.youtube.com/watch?v=_Yhyp-_hX2s" required>
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <small class="form-text text-muted mt-2">Ao usar nosso serviço, você aceita nossos <a href="{% url 'termos' %}">Termos de Serviço</a></small>
+    </div>
+
+    <div id="videoInfo" class="container text-center mt-5" style="display: none;">
+        <div class="row">
+            <div class="col-md-8">
+                <img id="thumbnail" src="" alt="Thumbnail" class="img-fluid rounded mb-3">
+                <h3 id="videoTitle">Título do Vídeo</h3>
+                <select id="formatSelector" class="form-control mb-3">
+                    <!-- Opções de formato serão adicionadas aqui -->
+                </select>
+                <button id="downloadButton" class="btn btn-primary">Baixar</button>
+            </div>
+        </div>
     </div>
 
     <script>
         document.getElementById('videoForm').addEventListener('submit', function(event) {
             event.preventDefault();
             const url = document.querySelector('input[name="url"]').value.trim();
-            
+
             if (!url) {
                 alert('Por favor, insira uma URL válida.');
                 return;
@@ -42,47 +86,51 @@
                     alert(data.error);
                     return;
                 }
-                
+
                 document.getElementById('videoInfo').style.display = 'block';
                 document.getElementById('thumbnail').src = data.thumbnail;
-                
-                const formats = data.formats;
-                let formatsHtml = '<h3>Qualidades Disponíveis:</h3><ul>';
-                formats.forEach(format => {
-                    formatsHtml += `<li><button data-format-id="${format.format_id}">${format.format_note}</button></li>`;
+                document.getElementById('videoTitle').innerText = data.title;
+
+                const formatSelector = document.getElementById('formatSelector');
+                formatSelector.innerHTML = '';
+                data.formats.forEach(format => {
+                    const option = document.createElement('option');
+                    option.value = format.format_id;
+                    option.textContent = format.format_note;
+                    formatSelector.appendChild(option);
                 });
-                formatsHtml += '</ul>';
-                document.getElementById('formats').innerHTML = formatsHtml;
-                
-                document.querySelectorAll('#formats button').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const formatId = this.getAttribute('data-format-id');
-                        fetch('/download/', {
-                            method: 'POST',
-                            headers: {
-                                'X-CSRFToken': document.querySelector('[name="csrfmiddlewaretoken"]').value
-                            },
-                            body: new URLSearchParams({url: url, format_id: formatId})
-                        })
-                        .then(response => {
-                            if (response.ok) {
-                                return response.blob(); // Recebe o arquivo como Blob
-                            } else {
-                                return response.json().then(data => {
-                                    alert(data.error || 'Falha no download.');
-                                });
-                            }
-                        })
-                        .then(blob => {
-                            const a = document.createElement('a');
-                            a.href = URL.createObjectURL(blob);
-                            a.download = blob.name; // Nome do arquivo para download
-                            a.click();
-                        });
+
+                document.getElementById('downloadButton').addEventListener('click', function() {
+                    const formatId = formatSelector.value;
+                    fetch('/download/', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': document.querySelector('[name="csrfmiddlewaretoken"]').value
+                        },
+                        body: new URLSearchParams({url: url, format_id: formatId})
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            return response.blob();
+                        } else {
+                            return response.json().then(data => {
+                                alert(data.error || 'Falha no download.');
+                            });
+                        }
+                    })
+                    .then(blob => {
+                        const a = document.createElement('a');
+                        a.href = URL.createObjectURL(blob);
+                        a.download = 'video.mp4'; // Ajuste o nome do arquivo conforme necessário
+                        a.click();
                     });
                 });
             });
         });
     </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
