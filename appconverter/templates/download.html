@@ -121,7 +121,7 @@
                     .then(blob => {
                         const a = document.createElement('a');
                         a.href = URL.createObjectURL(blob);
-                        a.download = 'video.mp4'; // Ajuste o nome do arquivo conforme necessário
+                        a.download = `${data.title}.mp4`; // Usar o título original do vídeo
                         a.click();
                     });
                 });

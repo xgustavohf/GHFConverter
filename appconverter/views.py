@@ -34,7 +34,9 @@ def download_video_view(request):
             return JsonResponse({'error': 'URL ou formato inválido.'}, status=400)
         
         try:
-            filename = download_video(url, format_id)
+            info = get_video_info(url)
+            title = info.get('title', 'video').replace(' ', '_')  # Pega o título e remove espaços
+            filename = download_video(url, format_id, title)
             file_path = os.path.join(settings.MEDIA_ROOT, filename)
             response = FileResponse(open(file_path, 'rb'), as_attachment=True, filename=filename)
             
@@ -42,14 +44,12 @@ def download_video_view(request):
                 if os.path.exists(file_path):
                     os.remove(file_path)
             
-            # Use a background thread or a delayed call to remove the file after a short delay
             import threading
-            threading.Timer(5.0, remove_file).start()  # Ajuste o tempo conforme necessário
+            threading.Timer(5.0, remove_file).start()
             
             return response
         except ValueError as e:
             return JsonResponse({'error': str(e)}, status=400)
-
 
 def instagram_page(request):
     return render(request, 'instagram.html')
