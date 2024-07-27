@@ -1,6 +1,7 @@
 import yt_dlp
 from yt_dlp.utils import DownloadError
 import os
+import imageio_ffmpeg as ffmpeg
 
 def get_video_info(url):
     ydl_opts = {
@@ -25,6 +26,7 @@ def download_video(url, format_id):
         'outtmpl': 'media/%(title)s.%(ext)s',  # Salvar na pasta media
         'noplaylist': True,
         'merge_output_format': 'mp4',  # Garantir que o arquivo resultante seja em formato mp4
+        'ffmpeg_location': ffmpeg.get_ffmpeg_exe(),  # Usar o ffmpeg embutido
     }
     
     try:
