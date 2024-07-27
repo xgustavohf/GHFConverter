@@ -14,11 +14,20 @@ def get_video_info(url):
             info_dict = ydl.extract_info(url, download=False)
             
             desired_resolutions = {'240p', '360p', '480p', '720p', '1080p'}
-            formats = [f for f in info_dict.get('formats', []) if f.get('ext') == 'mp4' and f.get('format_note') in desired_resolutions]
+            formats = [
+                {
+                    'format_id': f.get('format_id'),
+                    'format_note': f.get('format_note'),
+                    'filesize': f.get('filesize', 0)  # Tamanho do arquivo em bytes
+                }
+                for f in info_dict.get('formats', [])
+                if f.get('ext') == 'mp4' and f.get('format_note') in desired_resolutions
+            ]
             info_dict['formats'] = formats
             return info_dict
     except DownloadError as e:
         raise ValueError('Erro ao extrair informações do vídeo. Verifique a URL.')
+
 
 def download_video(url, format_id):
     ydl_opts = {

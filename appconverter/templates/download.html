@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <style>
-        /* Define o fundo do nav como branco */
         .navbar {
             background-color: #ffffff; /* Branco */
         }
@@ -96,7 +95,8 @@
                 data.formats.forEach(format => {
                     const option = document.createElement('option');
                     option.value = format.format_id;
-                    option.textContent = format.format_note;
+                    const filesizeMB = (format.filesize / (1024 * 1024)).toFixed(2); // Converter para MB
+                    option.textContent = `${format.format_note} - ${filesizeMB} MB`;
                     formatSelector.appendChild(option);
                 });
 
