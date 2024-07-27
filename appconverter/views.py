@@ -3,7 +3,12 @@ from django.shortcuts import render
 from django.conf import settings
 from .forms import YouTubeDownloadForm
 from .youtube_downloader import get_video_info, download_video
+import instaloader
+import requests
 import os
+
+def termos_uso(request):
+    return render(request, 'termos.html')  
 
 def index(request):
     if request.method == 'POST':
@@ -44,8 +49,34 @@ def download_video_view(request):
             return response
         except ValueError as e:
             return JsonResponse({'error': str(e)}, status=400)
-        
-def termos_uso(request):
-    
-    return render(request, 'termos.html')  
-        
+
+
+def instagram_page(request):
+    return render(request, 'instagram.html')
+
+def instagram_download_view(request):
+    if request.method == 'POST':
+        url = request.POST.get('url')
+        if not url:
+            return JsonResponse({'error': 'URL não fornecida'}, status=400)
+
+        # Lógica para baixar vídeo do Instagram
+        loader = instaloader.Instaloader()
+        try:
+            shortcode = url.split('/')[-2]
+            post = instaloader.Post.from_shortcode(loader.context, shortcode)
+            video_url = post.video_url
+
+            # Download do vídeo
+            video_response = requests.get(video_url, stream=True)
+            if video_response.status_code == 200:
+                response = HttpResponse(video_response.content, content_type='video/mp4')
+                response['Content-Disposition'] = 'attachment; filename="video.mp4"'
+                return response
+            else:
+                return JsonResponse({'error': 'Não foi possível baixar o vídeo'}, status=400)
+
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+
+    return JsonResponse({'error': 'Método não permitido'}, status=405)
