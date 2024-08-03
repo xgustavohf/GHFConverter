@@ -14,6 +14,9 @@
         .navbar {
             background-color: #ffffff; /* Branco */
         }
+        #statusMessage {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -52,6 +55,9 @@
             </div>
         </form>
         <small class="form-text text-muted mt-2">Ao usar nosso serviço, você aceita nossos <a href="{% url 'termos' %}">Termos de Serviço</a></small>
+        
+        <!-- Status message -->
+        <div id="statusMessage" class="alert alert-info mt-4" role="alert"></div>
     </div>
 
     <div id="videoInfo" class="container text-center mt-5" style="display: none;">
@@ -78,6 +84,9 @@
             }
 
             const formData = new FormData(this);
+            document.getElementById('statusMessage').style.display = 'block';
+            document.getElementById('statusMessage').innerText = 'Buscando informações do vídeo...';
+
             fetch('', {
                 method: 'POST',
                 body: formData
@@ -85,7 +94,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.error) {
-                    alert(data.error);
+                    document.getElementById('statusMessage').innerText = data.error;
                     return;
                 }
 
@@ -103,8 +112,11 @@
                     formatSelector.appendChild(option);
                 });
 
+                document.getElementById('statusMessage').innerText = 'Escolha o formato e clique em Baixar.';
                 document.getElementById('downloadButton').addEventListener('click', function() {
                     const formatId = formatSelector.value;
+                    document.getElementById('statusMessage').innerText = 'Iniciando o download...';
+
                     fetch('/download/', {
                         method: 'POST',
                         headers: {
@@ -117,7 +129,7 @@
                             return response.blob();
                         } else {
                             return response.json().then(data => {
-                                alert(data.error || 'Falha no download.');
+                                document.getElementById('statusMessage').innerText = data.error || 'Falha no download.';
                             });
                         }
                     })
@@ -126,8 +138,12 @@
                         a.href = URL.createObjectURL(blob);
                         a.download = `${data.title}.mp4`; // Usar o título original do vídeo
                         a.click();
+                        document.getElementById('statusMessage').innerText = 'Download concluído!';
                     });
                 });
+            })
+            .catch(error => {
+                document.getElementById('statusMessage').innerText = 'Erro ao buscar informações do vídeo.';
             });
         });
     </script>
@@ -137,3 +153,4 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+

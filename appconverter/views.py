@@ -2,9 +2,12 @@ from django.http import HttpResponse, FileResponse, JsonResponse
 from django.shortcuts import render
 from django.conf import settings
 from .forms import YouTubeDownloadForm
+from .tasks import download_video_task
+from django.views.decorators.csrf import csrf_exempt
 from .youtube_downloader import get_video_info, download_video
 import instaloader
 import requests
+import yt_dlp
 import os
 
 def termos_uso(request):
@@ -50,6 +53,28 @@ def download_video_view(request):
             return response
         except ValueError as e:
             return JsonResponse({'error': str(e)}, status=400)
+        
+
+def download_progress(request, task_id):
+    task = download_video_task.AsyncResult(task_id)
+    if task.state == 'PENDING':
+        response = {
+            'state': task.state,
+            'status': 'Download pendente...'
+        }
+    elif task.state != 'FAILURE':
+        response = {
+            'state': task.state,
+            'status': task.info.get('status', ''),
+        }
+        if 'result' in task.info:
+            response['result'] = task.info['result']
+    else:
+        response = {
+            'state': task.state,
+            'status': str(task.info),
+        }
+    return JsonResponse(response)
 
 def instagram_page(request):
     return render(request, 'instagram.html')

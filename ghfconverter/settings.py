@@ -116,6 +116,15 @@ USE_I18N = True
 
 USE_TZ = True
 
+# your_project/settings.py
+
+
+CELERY_BROKER_URL = 'sqla+sqlite:///celerydb.sqlite3'
+CELERY_RESULT_BACKEND = 'db+sqlite:///celerydb.sqlite3'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
 
 
 # Static files (CSS, JavaScript, Images)

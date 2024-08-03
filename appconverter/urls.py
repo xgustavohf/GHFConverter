@@ -1,11 +1,12 @@
 from django.urls import path
-from .views import index, download_video_view, termos_uso, instagram_download_view, instagram_page
+from .views import index, download_video_view, termos_uso, instagram_download_view, instagram_page, download_progress
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('', index, name='index'),
     path('download/', download_video_view, name='download_video'),
+    path('progress/<str:task_id>/', download_progress, name='download_progress'),
     path('instagram/', instagram_page, name='instagram_page'),
     path('instagram-download/', instagram_download_view, name='instagram_download'),
     path('termos-de-uso/', termos_uso, name='termos')
