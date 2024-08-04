@@ -40,69 +40,53 @@ h1, h2 {
 }
 
 #videoInfo .row {
-    justify-content: center; /* Centraliza o conteúdo da coluna dentro da linha */
+    justify-content: center; /* Centraliza o conteúdo da coluna */
 }
 
 #videoInfo .col-md-8 {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centraliza os itens dentro da coluna */
+    text-align: center; /* Centraliza o conteúdo dentro da coluna */
 }
 
-#videoInfo img {
-    max-width: 100%; /* Garante que a imagem não ultrapasse a largura da coluna */
+.display-4 {
+    font-size: 2.5rem;
+    font-weight: 300;
+}
+
+.lead {
+    font-size: 1.25rem;
+    font-weight: 300;
+}
+
+.input-group {
+    max-width: 100%;
+}
+
+input[type="text"] {
+    flex-grow: 1;
+    border-radius: 0.25rem 0 0 0.25rem;
+}
+
+button[type="submit"] {
+    border-radius: 0 0.25rem 0.25rem 0;
+}
+
+#videoTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.alert {
+    font-size: 1rem;
+}
+
+small.form-text.text-muted {
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+#thumbnail {
+    max-width: 100%;
     height: auto;
-}
-
-.btn-circle {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    font-size: 20px;
-    margin-bottom: 10px;
-}
-
-#formatSelector {
-    max-width: 300px;
-    margin: 0 auto;
-}
-
-#downloadButton {
-    display: block;
-    margin: 20px auto; /* Espaçamento vertical */
-}
-
-/* Ajustar a largura do campo de input no desktop */
-@media (min-width: 768px) {
-    #videoForm .input-group {
-        width: 100%; /* Ocupa toda a largura da div */
-    }
-}
-
-/* Estilizar o botão de busca */
-.btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-}
-
-.btn-primary i {
-    margin-right: 5px;
-}
-
-/* Estilizar o botão de download */
-#downloadButton {
-    background-color: #007bff; /* Azul */
-    border-color: #007bff;
-}
-
-#downloadButton i {
-    margin-right: 5px;
-}
-
-.form-text.text-muted.mt-2 a {
-    text-decoration: none; /* Remove o sublinhado por padrão */
-}
-
-.form-text.text-muted.mt-2 a:hover {
-    text-decoration: none; /* Remove o sublinhado ao passar o mouse */
+    margin: 0 auto; /* Centraliza a imagem horizontalmente */
+    display: block; /* Garante que a imagem seja exibida como um bloco */
 }
