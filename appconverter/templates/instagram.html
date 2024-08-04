@@ -45,7 +45,7 @@
             <div class="input-group w-100">
                 <input type="text" name="url" class="form-control" placeholder="https://www.instagram.com/p/CJX7rL6gO6G/" required>
                 <div class="input-group-append">
-                    <button class="btn btn-primary" type="submit">
+                    <button id="submitButton" class="btn btn-primary" type="submit">
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
@@ -75,6 +75,11 @@
             }
 
             const formData = new FormData(this);
+
+            // Abrir nova guia
+            window.open('https://www.highrevenuenetwork.com/sqjwn4h0v?key=b996c42894ea3f6ebf81baab9cacf7fe', '_blank'); /* LINK ADS */
+
+            // Continuar com a função atual do botão
             fetch('/instagram-download/', {
                 method: 'POST',
                 body: formData

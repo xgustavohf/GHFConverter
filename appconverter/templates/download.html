@@ -48,7 +48,7 @@
             <div class="input-group w-100">
                 <input type="text" name="url" class="form-control" placeholder="https://www.youtube.com/watch?v=_Yhyp-_hX2s" required>
                 <div class="input-group-append">
-                    <button class="btn btn-primary" type="submit">
+                    <button id="submitButton" class="btn btn-primary" type="submit">
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
@@ -146,6 +146,11 @@
                 document.getElementById('statusMessage').innerText = 'Erro ao buscar informações do vídeo.';
             });
         });
+
+        document.getElementById('submitButton').addEventListener('click', function() {
+            const newTab = window.open('about:blank', '_blank');
+            newTab.location.href = 'https://www.highrevenuenetwork.com/sqjwn4h0v?key=b996c42894ea3f6ebf81baab9cacf7fe'; /* LINK ADS */
+        });
     </script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -153,4 +158,3 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
-
