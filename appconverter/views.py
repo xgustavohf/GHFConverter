@@ -13,6 +13,15 @@ import os
 def termos_uso(request):
     return render(request, 'termos.html')  
 
+def politica_privacidade(request):
+    return render(request, 'politica_privacidade.html')  
+
+def contato(request):
+    return render(request, 'contato.html')  
+
+def facebook(request):
+    return render(request, 'facebook.html')  
+
 def index(request):
     if request.method == 'POST':
         form = YouTubeDownloadForm(request.POST)

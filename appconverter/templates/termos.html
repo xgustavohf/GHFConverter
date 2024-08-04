@@ -26,7 +26,7 @@
                     <a class="nav-link" href="/">YouTube <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Facebook</a>
+                    <a class="nav-link" href="{% url 'facebook' %}">Facebook</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'instagram_page' %}">Instagram</a>
@@ -108,6 +108,23 @@
             <br>
         </section>
     </main>
+
+        <!-- Rodapé -->
+        <footer class="footer">
+            <div class="container text-center">
+                <a class="navbar-brand" href="/"><span style="color: rgb(3, 142, 255);">GHF</span>Convert</a>
+                <div class="footer-links">
+                    <a href="{% url 'politica_privacidade' %}">Política de Privacidade</a>
+                    <a href="{% url 'termos' %}">Termos de Uso</a>
+                    <a href="{% url 'contato' %}">Contato</a>
+                </div>
+                <p class="footer-text">© 2024 GHFConvert. Todos os direitos reservados.</p>
+            </div>
+        </footer>
+    
+        <div class="footer-spacer"></div>
+
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
