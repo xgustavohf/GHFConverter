@@ -107,7 +107,7 @@
                 data.formats.forEach(format => {
                     const option = document.createElement('option');
                     option.value = format.format_id;
-                    const filesizeMB = (format.filesize / (1024 * 1024)).toFixed(2); // Converter para MB
+                    const filesizeMB = (format.filesize / (1024 * 1024)).toFixed(2); 
                     option.textContent = `${format.format_note} - ${filesizeMB} MB`;
                     formatSelector.appendChild(option);
                 });
@@ -136,7 +136,7 @@
                     .then(blob => {
                         const a = document.createElement('a');
                         a.href = URL.createObjectURL(blob);
-                        a.download = `${data.title}.mp4`; // Usar o título original do vídeo
+                        a.download = `${data.title}.mp4`; 
                         a.click();
                         document.getElementById('statusMessage').innerText = 'Download concluído!';
                     });
