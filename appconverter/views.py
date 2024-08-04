@@ -22,6 +22,9 @@ def contato(request):
 def facebook(request):
     return render(request, 'facebook.html')  
 
+def youtube(request):
+    return render(request, 'youtube.html')
+
 def index(request):
     if request.method == 'POST':
         form = YouTubeDownloadForm(request.POST)
