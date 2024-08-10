@@ -13,7 +13,7 @@ def download_video_task(url, format_id, title):
         'merge_output_format': 'mp4',
         'ffmpeg_location': ffmpeg.get_ffmpeg_exe(),
     }
-    
+
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(url, download=True)
