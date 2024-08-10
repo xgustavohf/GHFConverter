@@ -5,6 +5,7 @@ from .forms import YouTubeDownloadForm
 from .tasks import download_video_task
 from django.views.decorators.csrf import csrf_exempt
 from .youtube_downloader import get_video_info, download_video
+from .facebook_downloader import download_facebook_video
 import instaloader
 import requests
 import yt_dlp
@@ -134,3 +135,33 @@ def instagram_download_view(request):
             return JsonResponse({'error': str(e)}, status=400)
 
     return JsonResponse({'error': 'Método não permitido'}, status=405)
+
+
+def facebook(request):
+    if request.method == 'POST':
+        url = request.POST.get('url')
+        if not url:
+            return JsonResponse({'error': 'URL não fornecida'}, status=400)
+        
+        try:
+            title = "facebook_video"
+            filename = download_facebook_video(url, title)
+            file_path = os.path.join(settings.MEDIA_ROOT, filename)
+            
+            if os.path.exists(file_path):
+                response = FileResponse(open(file_path, 'rb'), as_attachment=True, filename=filename)
+                
+                def remove_file():
+                    if os.path.exists(file_path):
+                        os.remove(file_path)
+                
+                import threading
+                threading.Timer(5.0, remove_file).start()
+                
+                return response
+            else:
+                return JsonResponse({'error': 'Arquivo não encontrado'}, status=404)
+        except ValueError as e:
+            return JsonResponse({'error': str(e)}, status=400)
+    
+    return render(request, 'facebook.html')
