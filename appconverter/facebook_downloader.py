@@ -3,6 +3,9 @@ import requests
 from bs4 import BeautifulSoup
 import yt_dlp
 
+# Define o comprimento máximo para o nome do arquivo
+MAX_FILENAME_LENGTH = 100
+
 def get_facebook_video_info(facebook_url):
     try:
         ydl_opts = {
@@ -28,6 +31,11 @@ def download_facebook_video(facebook_url):
     if response.status_code == 200:
         # Limpar o título para criar um nome de arquivo seguro
         safe_title = "".join([c for c in title if c.isalnum() or c in (' ', '_', '-')])
+        
+        # Truncar o título se ele for muito longo
+        if len(safe_title) > MAX_FILENAME_LENGTH:
+            safe_title = safe_title[:MAX_FILENAME_LENGTH]
+        
         filename = f'{safe_title}.mp4'
         file_path = os.path.join('media', filename)  # Use `os.path.join` para maior compatibilidade
         with open(file_path, 'wb') as f:
