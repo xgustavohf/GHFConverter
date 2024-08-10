@@ -8,11 +8,11 @@
     <link rel="icon" href="{% static 'images/ghfconvert.ico' %}" type="image/x-icon">
     <link rel="shortcut icon" href="{% static 'images/ghfconvert.ico' %}" type="image/x-icon">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <style>
         .navbar {
-            background-color: #ffffff; /* Branco */
+            background-color: #ffffff;
         }
         #statusMessage {
             display: none;
@@ -49,7 +49,7 @@
                 <input type="text" name="url" class="form-control" placeholder="https://www.facebook.com/watch/?v=1234567890123456" required>
                 <div class="input-group-append">
                     <button id="submitButton" class="btn btn-primary" type="submit">
-                        <i class="fas fa-search"></i> <!-- Usando Font Awesome -->
+                        <i class="fas fa-search"></i>
                     </button>
                 </div>
             </div>
@@ -81,13 +81,38 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
-        // Opcional: Adicione seu JavaScript aqui, se necessário
         document.getElementById('videoForm').addEventListener('submit', function(event) {
-            // Pode adicionar validações ou lógica adicional aqui, se necessário
-            // Exemplo: Mostrar mensagem de status após o envio
+            event.preventDefault();
             var statusMessage = document.getElementById('statusMessage');
             statusMessage.innerHTML = '<div class="alert alert-info" role="alert"><strong>Informação:</strong> Seu download está sendo processado.</div>';
             statusMessage.style.display = 'block';
+            
+            var formData = new FormData(this);
+            fetch("{% url 'facebook' %}", {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    statusMessage.innerHTML = '<div class="alert alert-danger" role="alert"><strong>Erro:</strong> ' + data.error + '</div>';
+                } else {
+                    statusMessage.innerHTML = '<div class="alert alert-success" role="alert"><strong>Concluído:</strong> Seu download está pronto.</div>';
+                    // Criar um link temporário e clicar nele para iniciar o download automaticamente
+                    var link = document.createElement('a');
+                    link.href = data.file_url;
+                    link.download = data.file_name || 'video.mp4';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+            })
+            .catch(error => {
+                statusMessage.innerHTML = '<div class="alert alert-danger" role="alert"><strong>Erro:</strong> Ocorreu um erro ao processar seu pedido.</div>';
+            });
         });
     </script>
 </body>

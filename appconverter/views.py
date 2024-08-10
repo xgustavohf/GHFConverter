@@ -8,7 +8,9 @@ from .youtube_downloader import get_video_info, download_video
 from .facebook_downloader import download_facebook_video
 import instaloader
 import requests
+import threading
 import yt_dlp
+import time
 import os
 
 def termos_uso(request):
@@ -137,6 +139,16 @@ def instagram_download_view(request):
     return JsonResponse({'error': 'Método não permitido'}, status=405)
 
 
+def remove_file_later(file_path, delay=5):
+    """Remove o arquivo após um certo atraso."""
+    def remove_file():
+        time.sleep(delay)
+        if os.path.exists(file_path):
+            os.remove(file_path)
+    
+    thread = threading.Thread(target=remove_file)
+    thread.start()
+
 def facebook(request):
     if request.method == 'POST':
         url = request.POST.get('url')
@@ -148,16 +160,12 @@ def facebook(request):
             file_path = os.path.join(settings.MEDIA_ROOT, filename)
             
             if os.path.exists(file_path):
-                response = FileResponse(open(file_path, 'rb'), as_attachment=True, filename=filename)
+                file_url = request.build_absolute_uri(settings.MEDIA_URL + filename)
                 
-                def remove_file():
-                    if os.path.exists(file_path):
-                        os.remove(file_path)
+                # Inicia a thread para remover o arquivo após um atraso
+                remove_file_later(file_path)
                 
-                import threading
-                threading.Timer(5.0, remove_file).start()
-                
-                return response
+                return JsonResponse({'file_url': file_url, 'file_name': filename})
             else:
                 return JsonResponse({'error': 'Arquivo não encontrado'}, status=404)
         except ValueError as e:

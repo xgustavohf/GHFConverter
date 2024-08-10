@@ -40,6 +40,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'appconverter.middlewares.CleanupTemporaryFilesMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'ghfconverter.urls'
