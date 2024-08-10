@@ -40,6 +40,23 @@ def index(request):
     
     return render(request, 'download.html', {'form': form})
 
+def youtube(request):
+    if request.method == 'POST':
+        form = YouTubeDownloadForm(request.POST)
+        if form.is_valid():
+            url = form.cleaned_data['url']
+            try:
+                info = get_video_info(url)
+                return JsonResponse(info)
+            except ValueError as e:
+                return JsonResponse({'error': str(e)}, status=400)
+    else:
+        form = YouTubeDownloadForm()
+    
+    return render(request, 'youtube.html', {'form': form})
+
+
+
 def download_video_view(request):
     if request.method == 'POST':
         url = request.POST.get('url')
