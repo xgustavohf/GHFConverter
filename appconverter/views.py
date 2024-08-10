@@ -144,8 +144,7 @@ def facebook(request):
             return JsonResponse({'error': 'URL não fornecida'}, status=400)
         
         try:
-            title = "facebook_video"
-            filename = download_facebook_video(url, title)
+            filename = download_facebook_video(url)
             file_path = os.path.join(settings.MEDIA_ROOT, filename)
             
             if os.path.exists(file_path):
