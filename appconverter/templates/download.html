@@ -85,6 +85,24 @@
         <small class="form-text text-muted mt-2">Ao usar nosso serviço, você aceita nossos <a href="{% url 'termos' %}">Termos de Serviço</a></small>
     </div>
 
+
+    <div id="videoInfo" class="container text-center mt-5" style="display: none;">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <img id="thumbnail" src="" alt="Thumbnail" class="img-fluid rounded mb-3">
+                <h3 id="videoTitle">Título do Vídeo</h3>
+                <!-- Status message após título do vídeo -->
+                <div id="statusMessage" class="alert alert-info mt-4" role="alert"></div>
+                <select id="formatSelector" class="form-control mb-3">
+                    <!-- Opções de formato serão adicionadas aqui -->
+                </select>
+                <button id="downloadButton" class="btn btn-primary">Baixar</button>
+            </div>
+        </div>
+    </div>
+
+
+
 <!-- Instruções de uso -->
 <div class="instructions text-center">
     <h2>Como baixar o vídeo do YouTube?</h2>
@@ -227,7 +245,7 @@
 
 <!-- Benefícios do GHFConvert -->
 <div class="container benefits text-center">
-    <h3>Por que escolher o <a class="navbar-brand" style="font-size: inherit;"><span style="color: rgb(3, 142, 255);">GHF</span>Convert?</a></h3>
+    <h3>Por que escolher o <a class="navbar-brand" style="font-size: inherit;"><span style="color: rgb(3, 142, 255);">GHF</span>Convert?</a></h3><br>
 
     <div class="row">
         <div class="col-md-4 col-sm-12 d-flex justify-content-center mb-4">
@@ -313,24 +331,6 @@
 </style>
 
 
-
-
-
-
-    <div id="videoInfo" class="container text-center mt-5" style="display: none;">
-        <div class="row">
-            <div class="col-md-8 mx-auto">
-                <img id="thumbnail" src="" alt="Thumbnail" class="img-fluid rounded mb-3">
-                <h3 id="videoTitle">Título do Vídeo</h3>
-                <!-- Status message após título do vídeo -->
-                <div id="statusMessage" class="alert alert-info mt-4" role="alert"></div>
-                <select id="formatSelector" class="form-control mb-3">
-                    <!-- Opções de formato serão adicionadas aqui -->
-                </select>
-                <button id="downloadButton" class="btn btn-primary">Baixar</button>
-            </div>
-        </div>
-    </div>
 
     <!-- Rodapé -->
     <footer class="footer">
