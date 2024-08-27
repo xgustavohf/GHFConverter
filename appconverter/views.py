@@ -117,21 +117,15 @@ def instagram_download_view(request):
         if not url:
             return JsonResponse({'error': 'URL não fornecida'}, status=400)
 
-        # Lógica para baixar vídeo do Instagram
         loader = instaloader.Instaloader()
         try:
             shortcode = url.split('/')[-2]
             post = instaloader.Post.from_shortcode(loader.context, shortcode)
             video_url = post.video_url
+            title = post.caption  # Use 'caption' para a descrição do vídeo
+            thumbnail_url = post.url  # Ajuste para obter a thumbnail correta
 
-            # Download do vídeo
-            video_response = requests.get(video_url, stream=True)
-            if video_response.status_code == 200:
-                response = HttpResponse(video_response.content, content_type='video/mp4')
-                response['Content-Disposition'] = 'attachment; filename="video.mp4"'
-                return response
-            else:
-                return JsonResponse({'error': 'Não foi possível baixar o vídeo'}, status=400)
+            return JsonResponse({'title': title, 'thumbnail': thumbnail_url, 'video_url': video_url})
 
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=400)

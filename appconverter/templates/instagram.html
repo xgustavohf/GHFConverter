@@ -9,10 +9,19 @@
     <link rel="shortcut icon" href="{% static 'images/ghfconvert.ico' %}" type="image/x-icon">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <style>
         .navbar {
             background-color: #ffffff;
+        }
+        .icon-container {
+            font-size: 3rem;
+            color: rgb(3, 142, 255);
+            margin-bottom: 1rem;
+        }
+        #downloadButton {
+            margin-top: 20px; /* Ajuste o valor conforme necessário */
         }
     </style>
 </head>
@@ -57,29 +66,29 @@
     <div id="videoInfo" class="container text-center mt-5" style="display: none;">
         <div class="row">
             <div class="col-md-8">
-                <img id="thumbnail" src="" alt="Thumbnail" class="img-fluid rounded mb-3">
+                <div class="icon-container">
+                    <i class="bi bi-instagram"></i>
+                </div>
                 <h3 id="videoTitle">Título do Vídeo</h3>
-                <button id="downloadButton" class="btn btn-primary">Baixar</button>
+                <button id="downloadButton" class="btn btn-primary mt-4">Baixar</button>
             </div>
         </div>
     </div>
 
-
-        <!-- Rodapé -->
-        <footer class="footer">
-            <div class="container text-center">
-                <a class="navbar-brand" href="/"><span style="color: rgb(3, 142, 255);">GHF</span>Convert</a>
-                <div class="footer-links">
-                    <a href="{% url 'politica_privacidade' %}">Política de Privacidade</a>
-                    <a href="{% url 'termos' %}">Termos de Uso</a>
-                    <a href="{% url 'contato' %}">Contato</a>
-                </div>
-                <p class="footer-text">© 2024 GHFConvert. Todos os direitos reservados.</p>
+    <!-- Rodapé -->
+    <footer class="footer">
+        <div class="container text-center">
+            <a class="navbar-brand" href="/"><span style="color: rgb(3, 142, 255);">GHF</span>Convert</a>
+            <div class="footer-links">
+                <a href="{% url 'politica_privacidade' %}">Política de Privacidade</a>
+                <a href="{% url 'termos' %}">Termos de Uso</a>
+                <a href="{% url 'contato' %}">Contato</a>
             </div>
-        </footer>
-    
-        <div class="footer-spacer"></div>
+            <p class="footer-text">© 2024 GHFConvert. Todos os direitos reservados.</p>
+        </div>
+    </footer>
 
+    <div class="footer-spacer"></div>
 
     <script>
         document.getElementById('videoForm').addEventListener('submit', function(event) {
@@ -93,14 +102,34 @@
 
             const formData = new FormData(this);
 
-            // Abrir nova guia
-            window.open('https://www.highrevenuenetwork.com/sqjwn4h0v?key=b996c42894ea3f6ebf81baab9cacf7fe', '_blank'); /* LINK ADS */
-
-            // Continuar com a função atual do botão
             fetch('/instagram-download/', {
                 method: 'POST',
                 body: formData
             })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    document.getElementById('videoInfo').style.display = 'block';
+                    document.getElementById('videoTitle').innerText = data.title; // Atualiza o título do vídeo
+                    document.getElementById('downloadButton').dataset.videoUrl = data.video_url; // Armazena a URL do vídeo
+                }
+            })
+            .catch(error => {
+                alert('Erro na solicitação: ' + error.message);
+            });
+        });
+
+        document.getElementById('downloadButton').addEventListener('click', function() {
+            const videoUrl = this.dataset.videoUrl;
+
+            if (!videoUrl) {
+                alert('URL do vídeo não disponível.');
+                return;
+            }
+
+            fetch(videoUrl)
             .then(response => {
                 if (response.ok) {
                     return response.blob();
@@ -127,3 +156,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+
+
+
