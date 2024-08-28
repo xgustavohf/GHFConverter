@@ -11,7 +11,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y3P912PECQ"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-Y3P912PECQ');
+    </script>
     <style>
+        body {
+            overflow-x: hidden;
+        }
         .navbar {
             background-color: #ffffff;
         }
@@ -26,6 +38,33 @@
         #statusMessage {
             display: none;
             margin-bottom: 20px; /* Adiciona margem inferior para separar do botão */
+        }
+        .feature-box {
+            margin-top: 50px;
+        }
+        .feature-box h3 {
+            color: rgb(3, 142, 255);
+        }
+        .feature-box img {
+            max-width: 100px;
+            margin-bottom: 20px;
+        }
+        .instructions, .benefits {
+            margin-top: 50px;
+        }
+        .instructions h2, .benefits h2 {
+            color: rgb(3, 142, 255);
+            margin-bottom: 30px;
+        }
+        .instructions p, .benefits p {
+            margin-bottom: 20px;
+        }
+        .instructions img, .benefits img {
+            max-width: 60px;
+            margin-bottom: 15px;
+        }
+        .footer {
+            margin-top: 50px;
         }
     </style>
 </head>
@@ -80,6 +119,235 @@
             </div>
         </div>
     </div>
+
+
+    <!-- Instruções de uso -->
+<div class="instructions text-center">
+    <h2>Como baixar o vídeo do <span style="color: rgb(3, 142, 255);">Instagram</span>?</h2>
+    <div id="instructionsCarousel" class="carousel slide d-md-none" data-ride="carousel" data-interval="3000">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="row justify-content-center">
+                    <div class="col-md-4 d-flex flex-column align-items-center">
+                        <div class="icon-wrapper">
+                            <i class="bi bi-clipboard" style="font-size: 40px; color: #007bff;"></i>
+                        </div>
+                        <p class="instruction-text"><strong>PASSO 1:</strong><br>Copie o URL do vídeo do Instagram<br>que deseja baixar.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="row justify-content-center">
+                    <div class="col-md-4 d-flex flex-column align-items-center">
+                        <div class="icon-wrapper">
+                            <i class="bi bi-hand-index-thumb" style="font-size: 40px; color: #007bff;"></i>
+                        </div>
+                        <p class="instruction-text"><strong>PASSO 2:</strong><br>Cole o URL no campo de pesquisa<br>e clique no botão para iniciar a conversão.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="row justify-content-center">
+                    <div class="col-md-4 d-flex flex-column align-items-center">
+                        <div class="icon-wrapper">
+                            <i class="bi bi-cloud-download" style="font-size: 40px; color: #007bff;"></i>
+                        </div>
+                        <p class="instruction-text"><strong>PASSO 3:</strong><br>Selecione a qualidade para baixar o arquivo<br>no seu dispositivo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-none d-md-block">
+        <!-- Conteúdo estático para telas maiores -->
+        <div class="row justify-content-center">
+            <div class="col-md-4 d-flex flex-column align-items-center">
+                <div class="icon-wrapper">
+                    <i class="bi bi-clipboard" style="font-size: 40px; color: #007bff;"></i>
+                </div>
+                <p class="instruction-text"><strong>PASSO 1:</strong><br>Copie o URL do vídeo do Instagram<br>que deseja baixar.</p>
+            </div>
+            <div class="col-md-4 d-flex flex-column align-items-center">
+                <div class="icon-wrapper">
+                    <i class="bi bi-hand-index-thumb" style="font-size: 40px; color: #007bff;"></i>
+                </div>
+                <p class="instruction-text"><strong>PASSO 2:</strong><br>Cole o URL no campo de pesquisa<br>e clique no botão para iniciar a conversão.</p>
+            </div>
+            <div class="col-md-4 d-flex flex-column align-items-center">
+                <div class="icon-wrapper">
+                    <i class="bi bi-cloud-download" style="font-size: 40px; color: #007bff;"></i>
+                </div>
+                <p class="instruction-text"><strong>PASSO 3:</strong><br>Clique no botão <strong>Baixar</strong> para salvar o arquivo<br>no seu dispositivo.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .instructions {
+        background-color: #ffffff; /* Fundo branco para a seção de instruções */
+        padding: 30px 0; /* Espaçamento interno superior e inferior */
+        border-radius: 8px; /* Bordas arredondadas, opcional */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil para destaque */
+        margin-top: 50px; /* Espaçamento superior */
+        width: 100%; /* Garante que a seção ocupe toda a largura disponível */
+        position: relative; /* Necessário para o posicionamento absoluto dos pseudo-elementos */
+        left: 0; /* Garante que a seção comece do canto esquerdo */
+        right: 0; /* Garante que a seção vá até o canto direito */
+    }
+
+    .icon-wrapper {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 80px; /* Largura do círculo */
+        height: 80px; /* Altura do círculo */
+        border-radius: 50%; /* Círculo redondo */
+        background-color: #ffffff; /* Fundo branco */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+        margin: 0 auto; /* Centraliza o círculo */
+        margin-bottom: 10px; /* Espaço abaixo do ícone */
+    }
+
+    .icon-wrapper i {
+        font-size: 40px; /* Tamanho do ícone */
+    }
+
+    .icon-wrapper::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 50%;
+        border: 3px solid rgba(0, 0, 0, 0.1); /* Círculo com contraste leve */
+        z-index: -1;
+    }
+
+    .instruction-text {
+        font-size: 14px; /* Tamanho do texto */
+        margin-top: 0; /* Remove o espaço acima do texto */
+        line-height: 1.4; /* Ajusta o espaçamento entre linhas */
+        text-align: center; /* Centraliza o texto */
+    }
+
+    .instructions h2 {
+    font-size: 24px; /* Tamanho do texto para dispositivos maiores */
+    color: #000000; /* Altera a cor do texto para preto */
+    margin-bottom: 30px; /* Espaço abaixo do título */
+    }
+
+    /* Esconde os controles de navegação e indicadores em dispositivos móveis */
+    .carousel-control-prev, .carousel-control-next {
+        display: none !important;
+    }
+
+    .carousel-indicators {
+        display: none !important;
+    }
+
+    /* Remove transição entre itens do carrossel */
+    .carousel-item {
+        transition: none !important;
+    }
+
+    @media (max-width: 768px) {
+    .instructions h2 {
+        font-size: 20px; /* Diminui o tamanho do texto para dispositivos móveis */
+        /* A cor preta já está definida acima, então não é necessário repetir */
+    }
+}
+</style>
+
+
+<!-- Benefícios do GHFConvert -->
+<div class="container benefits text-center">
+    <h3>Por que escolher o <a class="navbar-brand" style="font-size: inherit;"><span style="color: rgb(3, 142, 255);">GHF</span>Convert?</a></h3><br>
+
+    <div class="row">
+        <div class="col-md-4 col-sm-12 d-flex justify-content-center mb-4">
+            <div class="benefit-item">
+                <div class="icon-container">
+                    <i class="bi bi-clock-history"></i>
+                </div>
+                <p><strong>Rápido e Fácil</strong></p>
+                <p>Com GHFConvert, basta copiar a URL do vídeo do Instagram, colar no campo de pesquisa e clicar em Baixar.</p>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12 d-flex justify-content-center mb-4">
+            <div class="benefit-item">
+                <div class="icon-container">
+                    <i class="bi bi-film"></i>
+                </div>
+                <p><strong>Compatível com Vários Formatos e Qualidades</strong></p>
+                <p>O GHFConvert permite baixar vídeos em diversos formatos, como mp4, webm, mp3, m4a, e em diferentes qualidades, incluindo 240p, 360p, 480p, 720p e 1080p.</p>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12 d-flex justify-content-center mb-4">
+            <div class="benefit-item">
+                <div class="icon-container">
+                    <i class="bi bi-shield-check"></i>
+                </div>
+                <p><strong>Sempre Seguro e Gratuito</strong></p>
+                <p>O GHFConvert é totalmente GRATUITO. Tudo o que você precisa é de um navegador e uma conexão com a internet para baixar vídeos, sem a necessidade de criar uma conta.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+.benefit-item {
+    position: relative;
+    padding: 2rem;
+    background-color: #ffffff;
+    border: 2px solid #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Garante que o item se ajuste ao tamanho da coluna */
+    text-align: center;
+}
+
+.icon-container {
+    position: relative;
+    width: 4rem;
+    height: 4rem;
+    margin: 0 auto 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon-container::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: calc(100% + 20px);
+    height: calc(100% + 20px);
+    border: 2px solid rgba(3, 142, 255, 0.2);
+    border-radius: 50%;
+}
+
+.icon-container i {
+    z-index: 1;
+    font-size: 2rem;
+    color: rgb(3, 142, 255);
+}
+
+.benefit-item p {
+    margin-top: 1rem;
+}
+
+.benefit-item strong {
+    display: block;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+</style>
+
 
     <!-- Rodapé -->
     <footer class="footer">
