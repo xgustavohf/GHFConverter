@@ -123,6 +123,11 @@ def instagram_download_view(request):
             post = instaloader.Post.from_shortcode(loader.context, shortcode)
             video_url = post.video_url
             title = post.caption  # Use 'caption' para a descrição do vídeo
+
+            # Limite o título a 50 caracteres
+            if len(title) > 30:
+                title = title[:30] + '...'  # Adiciona '...' se o título for truncado
+
             thumbnail_url = post.url  # Ajuste para obter a thumbnail correta
 
             return JsonResponse({'title': title, 'thumbnail': thumbnail_url, 'video_url': video_url})
