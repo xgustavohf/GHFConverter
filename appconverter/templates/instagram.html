@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/instagram.css' %}">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y3P912PECQ"></script>
     <script>
@@ -20,53 +20,6 @@
 
     gtag('config', 'G-Y3P912PECQ');
     </script>
-    <style>
-        body {
-            overflow-x: hidden;
-        }
-        .navbar {
-            background-color: #ffffff;
-        }
-        .icon-container {
-            font-size: 3rem;
-            color: rgb(3, 142, 255);
-            margin-bottom: 1rem;
-        }
-        #downloadButton {
-            margin-top: 20px; /* Ajuste o valor conforme necessário */
-        }
-        #statusMessage {
-            display: none;
-            margin-bottom: 20px; /* Adiciona margem inferior para separar do botão */
-        }
-        .feature-box {
-            margin-top: 50px;
-        }
-        .feature-box h3 {
-            color: rgb(3, 142, 255);
-        }
-        .feature-box img {
-            max-width: 100px;
-            margin-bottom: 20px;
-        }
-        .instructions, .benefits {
-            margin-top: 50px;
-        }
-        .instructions h2, .benefits h2 {
-            color: rgb(3, 142, 255);
-            margin-bottom: 30px;
-        }
-        .instructions p, .benefits p {
-            margin-bottom: 20px;
-        }
-        .instructions img, .benefits img {
-            max-width: 60px;
-            margin-bottom: 15px;
-        }
-        .footer {
-            margin-top: 50px;
-        }
-    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light">
@@ -183,84 +136,6 @@
     </div>
 </div>
 
-<style>
-    .instructions {
-        background-color: #ffffff; /* Fundo branco para a seção de instruções */
-        padding: 30px 0; /* Espaçamento interno superior e inferior */
-        border-radius: 8px; /* Bordas arredondadas, opcional */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil para destaque */
-        margin-top: 50px; /* Espaçamento superior */
-        width: 100%; /* Garante que a seção ocupe toda a largura disponível */
-        position: relative; /* Necessário para o posicionamento absoluto dos pseudo-elementos */
-        left: 0; /* Garante que a seção comece do canto esquerdo */
-        right: 0; /* Garante que a seção vá até o canto direito */
-    }
-
-    .icon-wrapper {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 80px; /* Largura do círculo */
-        height: 80px; /* Altura do círculo */
-        border-radius: 50%; /* Círculo redondo */
-        background-color: #ffffff; /* Fundo branco */
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
-        margin: 0 auto; /* Centraliza o círculo */
-        margin-bottom: 10px; /* Espaço abaixo do ícone */
-    }
-
-    .icon-wrapper i {
-        font-size: 40px; /* Tamanho do ícone */
-    }
-
-    .icon-wrapper::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        border-radius: 50%;
-        border: 3px solid rgba(0, 0, 0, 0.1); /* Círculo com contraste leve */
-        z-index: -1;
-    }
-
-    .instruction-text {
-        font-size: 14px; /* Tamanho do texto */
-        margin-top: 0; /* Remove o espaço acima do texto */
-        line-height: 1.4; /* Ajusta o espaçamento entre linhas */
-        text-align: center; /* Centraliza o texto */
-    }
-
-    .instructions h2 {
-    font-size: 24px; /* Tamanho do texto para dispositivos maiores */
-    color: #000000; /* Altera a cor do texto para preto */
-    margin-bottom: 30px; /* Espaço abaixo do título */
-    }
-
-    /* Esconde os controles de navegação e indicadores em dispositivos móveis */
-    .carousel-control-prev, .carousel-control-next {
-        display: none !important;
-    }
-
-    .carousel-indicators {
-        display: none !important;
-    }
-
-    /* Remove transição entre itens do carrossel */
-    .carousel-item {
-        transition: none !important;
-    }
-
-    @media (max-width: 768px) {
-    .instructions h2 {
-        font-size: 20px; /* Diminui o tamanho do texto para dispositivos móveis */
-        /* A cor preta já está definida acima, então não é necessário repetir */
-    }
-}
-</style>
-
-
 <!-- Benefícios do GHFConvert -->
 <div class="container benefits text-center">
     <h3>Por que escolher o <a class="navbar-brand" style="font-size: inherit;"><span style="color: rgb(3, 142, 255);">GHF</span>Convert?</a></h3><br>
@@ -272,7 +147,7 @@
                     <i class="bi bi-clock-history"></i>
                 </div>
                 <p><strong>Rápido e Fácil</strong></p>
-                <p>Com GHFConvert, basta copiar a URL do vídeo do Instagram, colar no campo de pesquisa e clicar em Baixar.</p>
+                <p>Com <span style="color: rgb(3, 142, 255);">GHF</span><b>Convert</b>, basta copiar a URL do vídeo do Instagram, colar no campo de pesquisa e clicar em Baixar.</p>
             </div>
         </div>
         <div class="col-md-4 col-sm-12 d-flex justify-content-center mb-4">
@@ -281,7 +156,7 @@
                     <i class="bi bi-film"></i>
                 </div>
                 <p><strong>Compatível com Vários Formatos e Qualidades</strong></p>
-                <p>O GHFConvert permite baixar vídeos em diversos formatos, como mp4, webm, mp3, m4a, e em diferentes qualidades, incluindo 240p, 360p, 480p, 720p e 1080p.</p>
+                <p>O <span style="color: rgb(3, 142, 255);">GHF</span><b>Convert</b> permite baixar vídeos em diversos formatos, como mp4, webm, mp3, m4a, e em diferentes qualidades, incluindo 240p, 360p, 480p, 720p e 1080p.</p>
             </div>
         </div>
         <div class="col-md-4 col-sm-12 d-flex justify-content-center mb-4">
@@ -290,64 +165,11 @@
                     <i class="bi bi-shield-check"></i>
                 </div>
                 <p><strong>Sempre Seguro e Gratuito</strong></p>
-                <p>O GHFConvert é totalmente GRATUITO. Tudo o que você precisa é de um navegador e uma conexão com a internet para baixar vídeos, sem a necessidade de criar uma conta.</p>
+                <p>O <span style="color: rgb(3, 142, 255);">GHF</span><b>Convert</b> é totalmente <b>GRATUITO</b>. Tudo o que você precisa é de um navegador e uma conexão com a internet para baixar vídeos, sem a necessidade de criar uma conta.</p>
             </div>
         </div>
     </div>
 </div>
-
-
-<style>
-.benefit-item {
-    position: relative;
-    padding: 2rem;
-    background-color: #ffffff;
-    border: 2px solid #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%; /* Garante que o item se ajuste ao tamanho da coluna */
-    text-align: center;
-}
-
-.icon-container {
-    position: relative;
-    width: 4rem;
-    height: 4rem;
-    margin: 0 auto 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.icon-container::before {
-    content: "";
-    position: absolute;
-    top: -10px;
-    left: -10px;
-    width: calc(100% + 20px);
-    height: calc(100% + 20px);
-    border: 2px solid rgba(3, 142, 255, 0.2);
-    border-radius: 50%;
-}
-
-.icon-container i {
-    z-index: 1;
-    font-size: 2rem;
-    color: rgb(3, 142, 255);
-}
-
-.benefit-item p {
-    margin-top: 1rem;
-}
-
-.benefit-item strong {
-    display: block;
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-}
-
-</style>
-
 
     <!-- Rodapé -->
     <footer class="footer">
@@ -364,73 +186,7 @@
 
     <div class="footer-spacer"></div>
 
-    <script>
-        document.getElementById('videoForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const formData = new FormData(this);
-    
-            fetch('/instagram-download/', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    alert('Erro: ' + data.error);
-                } else {
-                    document.getElementById('videoInfo').style.display = 'block';
-                    document.getElementById('videoTitle').innerText = data.title; // Atualiza o título do vídeo
-                    document.getElementById('downloadButton').dataset.videoUrl = data.video_url; // Armazena a URL do vídeo
-                    document.getElementById('downloadButton').dataset.videoTitle = data.title; // Armazena o título do vídeo
-                }
-            })
-            .catch(error => {
-                alert('Erro na solicitação: ' + error.message);
-            });
-        });
-    
-        document.getElementById('downloadButton').addEventListener('click', function() {
-            const videoUrl = this.dataset.videoUrl;
-            const videoTitle = this.dataset.videoTitle || 'video'; // Usa 'video' como fallback
-    
-            if (!videoUrl) {
-                alert('URL do vídeo não disponível.');
-                return;
-            }
-    
-            const statusMessage = document.getElementById('statusMessage');
-            statusMessage.innerHTML = '<div class="alert alert-info" role="alert"><strong>Informação:</strong> Seu download está sendo processado.</div>';
-            statusMessage.style.display = 'block';
-    
-            fetch(videoUrl)
-            .then(response => {
-                if (response.ok) {
-                    return response.blob();
-                } else {
-                    return response.json().then(data => {
-                        alert(data.error || 'Falha no download.');
-                    });
-                }
-            })
-            .then(blob => {
-                const a = document.createElement('a');
-                a.href = URL.createObjectURL(blob);
-                
-                // Processa o título para ser um nome de arquivo válido
-                let fileName = videoTitle.replace(/[<>:"/\\|?*\x00-\x1F]/g, '_'); // Substitui caracteres inválidos por '_'
-                fileName = fileName.substring(0, 30); // Limita o nome do arquivo a 120 caracteres
-                a.download = fileName + '.mp4'; // Usa o título do vídeo como nome do arquivo
-                
-                a.click();
-                
-                // Atualiza o status para concluído após o download
-                statusMessage.innerHTML = '<div class="alert alert-success" role="alert"><strong>Concluído:</strong> Download concluído!.</div>';
-            })
-            .catch(error => {
-                statusMessage.innerHTML = '<div class="alert alert-danger" role="alert"><strong>Erro:</strong> Ocorreu um erro ao processar seu pedido.</div>';
-            });
-        });
-    </script>
+    <script src="{% static 'js/instagram.js' %}"></script>
     
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
