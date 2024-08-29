@@ -5,7 +5,7 @@ from .forms import YouTubeDownloadForm
 from .tasks import download_video_task
 from django.views.decorators.csrf import csrf_exempt
 from .youtube_downloader import get_video_info, download_video
-from .facebook_downloader import download_facebook_video
+from .facebook_downloader import download_facebook_video, get_facebook_video_info
 import instaloader
 import requests
 import threading
@@ -155,19 +155,29 @@ def facebook(request):
             return JsonResponse({'error': 'URL não fornecida'}, status=400)
         
         try:
+            # Obtém as informações do vídeo (URL, título)
+            video_url, title = get_facebook_video_info(url)
+            thumbnail_url = video_url + '/thumbnail.jpg'  # Atualizar para a maneira correta de obter a thumbnail
+
+            return JsonResponse({'title': title, 'thumbnail_url': thumbnail_url})
+        
+        except ValueError as e:
+            return JsonResponse({'error': str(e)}, status=400)
+
+    return render(request, 'facebook.html')
+
+
+def download_video_facebook(request):
+    if request.method == 'POST':
+        url = request.POST.get('url')
+        try:
             filename = download_facebook_video(url)
             file_path = os.path.join(settings.MEDIA_ROOT, filename)
-            
             if os.path.exists(file_path):
                 file_url = request.build_absolute_uri(settings.MEDIA_URL + filename)
-                
-                # Inicia a thread para remover o arquivo após um atraso
                 remove_file_later(file_path)
-                
                 return JsonResponse({'file_url': file_url, 'file_name': filename})
             else:
                 return JsonResponse({'error': 'Arquivo não encontrado'}, status=404)
         except ValueError as e:
             return JsonResponse({'error': str(e)}, status=400)
-    
-    return render(request, 'facebook.html')
