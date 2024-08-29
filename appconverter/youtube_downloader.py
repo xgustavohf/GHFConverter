@@ -13,7 +13,7 @@ def get_video_info(url):
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(url, download=False)
             
-            desired_resolutions = {'240p', '360p', '480p', '720p', '1080p'}
+            desired_resolutions = {'144p', '240p', '360p', '480p', '720p', '1080p'}
             formats = [
                 {
                     'format_id': f.get('format_id'),
