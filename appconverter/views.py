@@ -155,16 +155,16 @@ def facebook(request):
             return JsonResponse({'error': 'URL não fornecida'}, status=400)
         
         try:
-            # Obtém as informações do vídeo (URL, título)
-            video_url, title = get_facebook_video_info(url)
-            thumbnail_url = video_url + '/thumbnail.jpg'  # Atualizar para a maneira correta de obter a thumbnail
-
+            # Obtém as informações do vídeo (URL, título e thumbnail)
+            video_url, title, thumbnail_url = get_facebook_video_info(url)
+            
             return JsonResponse({'title': title, 'thumbnail_url': thumbnail_url})
         
         except ValueError as e:
             return JsonResponse({'error': str(e)}, status=400)
 
     return render(request, 'facebook.html')
+
 
 
 def download_video_facebook(request):
@@ -181,3 +181,6 @@ def download_video_facebook(request):
                 return JsonResponse({'error': 'Arquivo não encontrado'}, status=404)
         except ValueError as e:
             return JsonResponse({'error': str(e)}, status=400)
+
+
+
