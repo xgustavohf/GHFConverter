@@ -26,11 +26,24 @@
         #statusMessage {
             display: none;
         }
+        #statusMessage {
+            margin-top: 20px; /* Ajuste o valor conforme necessário */
+        }
         #videoThumbnail {
             max-height: 300px; /* Ajuste o valor conforme necessário */
             width: auto; /* Mantém a proporção da imagem */
             display: block;
             margin: 0 auto; /* Centraliza a imagem */
+        }
+        #videoTitle {
+            overflow-wrap: break-word; /* Quebra palavras longas */
+            word-wrap: break-word; /* Compatibilidade com navegadores antigos */
+            white-space: normal; /* Permite quebras de linha */
+            text-align: center; /* Opcional: centraliza o texto */
+            margin: 0 auto; /* Opcional: centraliza a div */
+        }
+        #downloadButton {
+            margin-top: 15px; /* Ajuste o valor conforme necessário */
         }
     </style>
 </head>
@@ -75,7 +88,8 @@
             <img id="videoThumbnail" class="img-fluid" alt="Thumbnail do vídeo">
             <h3 id="videoTitle" class="mt-3"></h3>
             <div id="statusMessage" class="mb-3"></div> <!-- StatusMessage moved here -->
-            <button id="downloadButton" class="btn btn-primary mt-2">Baixar</button>
+            <button id="downloadButton" class="btn btn-primary" style="margin-top: 15px;">Baixar</button>
+
         </div>
     </div>
 
