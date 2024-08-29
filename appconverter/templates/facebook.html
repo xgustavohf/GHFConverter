@@ -10,6 +10,15 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y3P912PECQ"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-Y3P912PECQ');
+    </script>    
     <style>
         .navbar {
             background-color: #ffffff;
@@ -62,12 +71,10 @@
         </form>
         <small class="form-text text-muted mt-2">Ao usar nosso serviço, você aceita nossos <a href="{% url 'termos' %}">Termos de Serviço</a></small>
     
-        <div id="statusMessage" class="mt-3"></div>
-    
         <div id="videoInfo" class="mt-3" style="display: none;">
             <img id="videoThumbnail" class="img-fluid" alt="Thumbnail do vídeo">
             <h3 id="videoTitle" class="mt-3"></h3>
-            <div id="statusMessage" class="mt-3"></div> <!-- Moved statusMessage here -->
+            <div id="statusMessage" class="mb-3"></div> <!-- StatusMessage moved here -->
             <button id="downloadButton" class="btn btn-primary mt-2">Baixar</button>
         </div>
     </div>
@@ -92,72 +99,76 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
-    document.getElementById('videoForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        var statusMessage = document.getElementById('statusMessage');
-        statusMessage.innerHTML = '<div class="alert alert-info" role="alert"><strong>Informação:</strong> Buscando informações do vídeo...</div>';
-        statusMessage.style.display = 'block';
+document.getElementById('videoForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    var statusMessage = document.getElementById('statusMessage');
+    statusMessage.style.display = 'none'; // Oculta statusMessage ao buscar informações
 
-        var formData = new FormData(this);
-        var csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    var formData = new FormData(this);
+    var csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
-        fetch("{% url 'facebook' %}", {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-CSRFToken': csrfToken
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                statusMessage.innerHTML = '<div class="alert alert-danger" role="alert"><strong>Erro:</strong> ' + data.error + '</div>';
-            } else {
-                document.getElementById('videoThumbnail').src = data.thumbnail_url;
-                document.getElementById('videoTitle').textContent = data.title;
-                document.getElementById('videoInfo').style.display = 'block';
-                document.getElementById('urlInput').value = formData.get('url');
-            }
-        })
-        .catch(error => {
-            statusMessage.innerHTML = '<div class="alert alert-danger" role="alert"><strong>Erro:</strong> Ocorreu um erro ao buscar as informações do vídeo.</div>';
-        });
+    fetch("{% url 'facebook' %}", {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRFToken': csrfToken
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            statusMessage.innerHTML = '<div class="alert alert-danger" role="alert"><strong>Erro:</strong> ' + data.error + '</div>';
+            statusMessage.style.display = 'block'; // Exibe statusMessage se houver erro
+        } else {
+            document.getElementById('videoThumbnail').src = data.thumbnail_url;
+            document.getElementById('videoTitle').textContent = data.title;
+            document.getElementById('videoInfo').style.display = 'block';
+            document.getElementById('urlInput').value = formData.get('url');
+            // StatusMessage escondido após buscar as informações
+        }
+    })
+    .catch(error => {
+        statusMessage.innerHTML = '<div class="alert alert-danger" role="alert"><strong>Erro:</strong> Ocorreu um erro ao buscar as informações do vídeo.</div>';
+        statusMessage.style.display = 'block'; // Exibe statusMessage se houver erro
     });
+});
 
-    document.getElementById('downloadButton').addEventListener('click', function() {
-        var statusMessage = document.getElementById('statusMessage');
-        statusMessage.innerHTML = '<div class="alert alert-info" role="alert"><strong>Informação:</strong> Iniciando o download do vídeo...</div>';
-        statusMessage.style.display = 'block';
+document.getElementById('downloadButton').addEventListener('click', function() {
+    var statusMessage = document.getElementById('statusMessage');
+    statusMessage.innerHTML = '<div class="alert alert-info" role="alert"><strong>Informação:</strong> Iniciando o download do vídeo...</div>';
+    statusMessage.style.display = 'block'; // Exibe statusMessage ao iniciar o download
 
-        var formData = new FormData();
-        formData.append('url', document.getElementById('urlInput').value);
-        var csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    var formData = new FormData();
+    formData.append('url', document.getElementById('urlInput').value);
+    var csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
-        fetch("{% url 'download_video_facebook' %}", {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-CSRFToken': csrfToken
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                statusMessage.innerHTML = '<div class="alert alert-danger" role="alert"><strong>Erro:</strong> ' + data.error + '</div>';
-            } else {
-                var link = document.createElement('a');
-                link.href = data.file_url;
-                link.download = data.file_name || 'video.mp4';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                statusMessage.innerHTML = '<div class="alert alert-success" role="alert"><strong>Sucesso:</strong> O vídeo foi baixado com sucesso.</div>';
-            }
-        })
-        .catch(error => {
-            statusMessage.innerHTML = '<div class="alert alert-danger" role="alert"><strong>Erro:</strong> Ocorreu um erro ao baixar o vídeo.</div>';
-        });
+    fetch("{% url 'download_video_facebook' %}", {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRFToken': csrfToken
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            statusMessage.innerHTML = '<div class="alert alert-danger" role="alert"><strong>Erro:</strong> ' + data.error + '</div>';
+        } else {
+            var link = document.createElement('a');
+            link.href = data.file_url;
+            link.download = data.file_name || 'video.mp4';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            statusMessage.innerHTML = '<div class="alert alert-success" role="alert"><strong>Sucesso:</strong> O vídeo foi baixado com sucesso.</div>';
+        }
+    })
+    .catch(error => {
+        statusMessage.innerHTML = '<div class="alert alert-danger" role="alert"><strong>Erro:</strong> Ocorreu um erro ao baixar o vídeo.</div>';
     });
+});
+
     </script>
 </body>
 </html>
+
