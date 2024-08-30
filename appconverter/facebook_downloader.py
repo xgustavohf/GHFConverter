@@ -16,8 +16,13 @@ def get_facebook_video_info(facebook_url):
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(facebook_url, download=False)
             video_url = info.get('url')
-            title = info.get('title', 'facebook_video')
-            thumbnail_url = info.get('thumbnail')  # Certifique-se de que esta chave existe no dicionário `info`
+            title = info.get('description') or info.get('title', 'facebook_video')
+
+            # Limitar o título a 30 caracteres
+            title = title[:30] + "..." if len(title) > 30 else title
+            
+            thumbnail_url = info.get('thumbnail')
+
             if video_url and title and thumbnail_url:
                 return video_url, title, thumbnail_url
             else:

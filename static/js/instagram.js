@@ -57,7 +57,7 @@ document.getElementById('downloadButton').addEventListener('click', function() {
         a.click();
         
         // Atualiza o status para concluído após o download
-        statusMessage.innerHTML = '<div class="alert alert-success" role="alert"><strong>Concluído:</strong> Download concluído!.</div>';
+        statusMessage.innerHTML = '<div class="alert alert-success" role="alert"><strong>Concluído:</strong> O vídeo foi baixado com sucesso.</div>';
     })
     .catch(error => {
         statusMessage.innerHTML = '<div class="alert alert-danger" role="alert"><strong>Erro:</strong> Ocorreu um erro ao processar seu pedido.</div>';
