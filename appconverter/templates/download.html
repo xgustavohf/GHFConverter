@@ -50,6 +50,117 @@
         .footer {
             margin-top: 50px;
         }
+
+
+
+/* Menu Centralizado */
+.menu-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+/* Menu com fundo branco */
+.menu-wrapper {
+    background: #ffffff; /* Cor de fundo branca */
+    border-radius: 10px; /* Bordas arredondadas */
+    padding: 10px 20px; /* Espaçamento interno */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transições suaves */
+    display: inline-block; /* Ajusta o tamanho ao conteúdo */
+    text-align: center; /* Centraliza o texto e os ícones dentro do menu */
+}
+
+/* Efeito ao passar o mouse sobre o menu */
+.menu-wrapper:hover {
+    transform: translateY(-5px); /* Efeito de elevação ao passar o mouse */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Sombra mais intensa ao passar o mouse */
+}
+
+/* Texto dentro da div do menu */
+.menu-text {
+    margin-bottom: 10px; /* Espaçamento abaixo do texto */
+    font-size: 1rem; /* Tamanho do texto */
+    color: #333; /* Cor do texto */
+}
+
+/* Menu */
+.menu {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Itens do Menu */
+.menu-item {
+    margin: 0 10px; /* Ajuste a margem horizontal conforme necessário */
+    text-align: center;
+}
+
+/* Remover sublinhado dos links */
+.menu-item a {
+    text-decoration: none; /* Remove o sublinhado */
+    color: #333; /* Cor do texto padrão */
+    transition: color 0.3s ease, transform 0.3s ease; /* Transições suaves */
+}
+
+/* Estilo para item selecionado */
+.menu-item a.active,
+.menu-item a:hover {
+    color: #007bff; /* Cor azul ao passar o mouse ou quando ativo */
+    transform: scale(1.2); /* Efeito de aumento ao passar o mouse */
+}
+
+/* Estilo dos ícones */
+.menu-item i {
+    font-size: 1.5rem; /* Tamanho do ícone */
+    color: #333; /* Cor do ícone */
+    transition: color 0.3s ease, transform 0.3s ease; /* Transições suaves */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; /* Largura do círculo */
+    height: 40px; /* Altura do círculo */
+    border-radius: 50%; /* Círculo */
+    background: #ffffff; /* Fundo branco */
+    border: 2px solid #ffffff; /* Contorno branco */
+}
+
+/* Estilo ao passar o mouse sobre os ícones */
+.menu-item:hover i {
+    color: #007bff; /* Cor do ícone ao passar o mouse */
+    background: #ffffff; /* Fundo branco ao passar o mouse */
+    border: 2px solid #007bff; /* Contorno azul ao passar o mouse */
+    transform: scale(1.2); /* Efeito de aumento do ícone ao passar o mouse */
+}
+
+/* Estilo do texto abaixo dos ícones */
+.menu-item span {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.9rem; /* Tamanho menor do texto */
+    color: #333; /* Cor do texto */
+}
+
+/* Ajustes para dispositivos móveis */
+@media (max-width: 768px) {
+    .menu-item i {
+        font-size: 1.2rem; /* Tamanho menor do ícone em dispositivos móveis */
+    }
+    
+    .menu-item span {
+        font-size: 0.8rem; /* Tamanho menor do texto em dispositivos móveis */
+    }
+}
+
+
+
+
+
+
+
     </style>
 </head>
 <body>
@@ -72,6 +183,35 @@
             </ul>
         </div>
     </nav>
+
+<!-- Menu Centralizado -->
+<div class="menu-container">
+    <div class="menu-wrapper">
+        <!-- Texto acima do menu -->
+        <div class="menu-text">
+            <strong>Escolha abaixo o formato que deseja baixar</strong>
+        </div>
+        
+        <ul class="menu">
+            <li class="menu-item">
+                <a href="{% url 'youtube' %}">
+                    <i class="bi bi-play-btn"></i>
+                    <span>MP4</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="{% url 'youtube_audio' %}">
+                    <i class="bi bi-file-earmark-music"></i>
+                    <span>MP3</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+
+
 
     <div class="container text-center mt-5">
         <h1 class="display-4">Baixador de vídeo do <span style="color: rgb(3, 142, 255);">YouTube</span></h1>

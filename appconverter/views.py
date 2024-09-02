@@ -1,4 +1,4 @@
-from django.http import HttpResponse, FileResponse, JsonResponse
+from django.http import HttpResponse, FileResponse, JsonResponse, Http404
 from django.shortcuts import render
 from django.conf import settings
 from .forms import YouTubeDownloadForm
@@ -11,6 +11,7 @@ import requests
 import threading
 import yt_dlp
 import time
+import tempfile
 import os
 
 def termos_uso(request):
@@ -183,4 +184,59 @@ def download_video_facebook(request):
             return JsonResponse({'error': str(e)}, status=400)
 
 
+def youtube_audio(request):
+    if request.method == 'POST':
+        url = request.POST.get('url')
 
+        if not url:
+            return JsonResponse({'error': 'URL não fornecida'}, status=400)
+
+        # Use MEDIA_ROOT para salvar o arquivo
+        output_dir = settings.MEDIA_ROOT
+        ydl_opts = {
+            'format': 'bestaudio/best',
+            'postprocessors': [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp3',
+                'preferredquality': '192',
+            }],
+            'outtmpl': os.path.join(output_dir, '%(id)s.%(ext)s'),
+            'noplaylist': True,
+            'quiet': True,
+        }
+        try:
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                info = ydl.extract_info(url, download=True)
+                audio_file_path = ydl.prepare_filename(info)
+                audio_file_path = audio_file_path.rsplit('.', 1)[0] + '.mp3'
+                
+                # Check if file exists in MEDIA_ROOT
+                if not os.path.exists(audio_file_path):
+                    return JsonResponse({'error': 'Arquivo de áudio não encontrado após o download.'}, status=500)
+                
+                # Atualize a URL para refletir a pasta MEDIA_ROOT
+                formats = [
+                    {
+                        'url': f'/download/{os.path.basename(audio_file_path)}',
+                        'quality': 'High',
+                        'bitrate': '192'
+                    }
+                ]
+
+                return JsonResponse({
+                    'title': info.get('title'),
+                    'thumbnail': info.get('thumbnail'),
+                    'formats': formats
+                })
+
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+
+    return render(request, 'youtube_audio.html')
+
+def serve_audio(request, filename):
+    file_path = os.path.join(settings.MEDIA_ROOT, filename)
+    if os.path.exists(file_path):
+        return FileResponse(open(file_path, 'rb'), content_type='audio/mpeg')
+    else:
+        raise Http404("Arquivo não encontrado")

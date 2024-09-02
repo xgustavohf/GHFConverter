@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baixar Áudio do YouTube</title>
+    <link rel="icon" href="{% static 'images/ghfconvert.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="/">GHFConvert</a>
+    </nav>
+    
+    <div class="menu-container">
+        <div class="menu-wrapper">
+            <div class="menu-text">
+                <strong>Escolha abaixo o formato que deseja baixar</strong>
+            </div>
+            <ul class="menu">
+                <li class="menu-item">
+                    <a href="{% url 'youtube' %}">
+                        <i class="bi bi-play-btn"></i>
+                        <span>MP4</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{% url 'youtube_audio' %}">
+                        <i class="bi bi-file-earmark-music"></i>
+                        <span>MP3</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container text-center mt-5">
+        <h1 class="display-4">Baixador de Áudio do <span style="color: rgb(3, 142, 255);">YouTube</span></h1>
+        <p class="lead">Baixe e salve áudios do YouTube gratuitamente</p>
+        <form id="audioForm" method="post" class="form-inline justify-content-center mt-4">
+            {% csrf_token %}
+            <div class="input-group w-100">
+                <input type="text" name="url" class="form-control" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ" required>
+                <div class="input-group-append">
+                    <button id="submitButton" class="btn btn-primary" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <small class="form-text text-muted mt-2">Ao usar nosso serviço, você aceita nossos <a href="{% url 'termos' %}">Termos de Serviço</a></small>
+    </div>
+
+    <div id="audioInfo" class="container text-center mt-5" style="display: none;">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <img id="thumbnail" src="" alt="Thumbnail" class="img-fluid rounded mb-3">
+                <h3 id="audioTitle">Título do Áudio</h3>
+                <select id="formatSelector" class="form-control mb-3">
+                    <!-- Opções de qualidade de áudio serão adicionadas aqui -->
+                </select>
+                <button id="downloadButton" class="btn btn-primary">Baixar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('audioForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            fetch('', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert('Erro: ' + data.error);
+                } else {
+                    document.getElementById('audioInfo').style.display = 'block';
+                    document.getElementById('thumbnail').src = data.thumbnail;
+                    document.getElementById('audioTitle').textContent = data.title;
+
+                    // Preenche as opções de qualidade no seletor
+                    const formatSelector = document.getElementById('formatSelector');
+                    formatSelector.innerHTML = ''; // Limpa as opções anteriores
+                    data.formats.forEach(format => {
+                        const option = document.createElement('option');
+                        option.value = format.url.split('/').pop(); // Apenas o nome do arquivo
+                        option.textContent = `${format.quality} (${format.bitrate} kbps)`;
+                        formatSelector.appendChild(option);
+                    });
+                }
+            })
+            .catch(error => {
+                alert('Erro ao processar a solicitação.');
+                console.error('Erro:', error);
+            });
+        });
+
+        document.getElementById('downloadButton').addEventListener('click', function() {
+            const selectedFormatUrl = document.getElementById('formatSelector').value;
+            if (selectedFormatUrl) {
+                // Construa a URL do arquivo no formato: /media/filename.mp3
+                const downloadUrl = `/download/${encodeURIComponent(selectedFormatUrl)}`;
+                
+                // Enviar uma solicitação GET para o URL de download
+                fetch(downloadUrl)
+                    .then(response => {
+                        if (response.ok) {
+                            return response.blob();
+                        }
+                        throw new Error('Erro ao fazer o download.');
+                    })
+                    .then(blob => {
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = selectedFormatUrl; // Nome do arquivo a ser baixado
+                        a.click();
+                        window.URL.revokeObjectURL(url);
+                    })
+                    .catch(error => {
+                        alert('Erro ao baixar o arquivo de áudio.');
+                        console.error('Erro:', error);
+                    });
+            } else {
+                alert('Por favor, selecione uma qualidade para baixar.');
+            }
+        });
+    </script>
+</body>
+</html>
