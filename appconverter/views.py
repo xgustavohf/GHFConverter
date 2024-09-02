@@ -237,6 +237,10 @@ def youtube_audio(request):
 def serve_audio(request, filename):
     file_path = os.path.join(settings.MEDIA_ROOT, filename)
     if os.path.exists(file_path):
-        return FileResponse(open(file_path, 'rb'), content_type='audio/mpeg')
+        response = FileResponse(open(file_path, 'rb'), content_type='audio/mpeg')
+
+        # Define o caminho do arquivo a ser excluído após o download
+        request._delete_temp_file = file_path
+        return response
     else:
         raise Http404("Arquivo não encontrado")
