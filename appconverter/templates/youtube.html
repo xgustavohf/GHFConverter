@@ -8,18 +8,11 @@
     <link rel="icon" href="{% static 'images/ghfconvert.ico' %}" type="image/x-icon">
     <link rel="shortcut icon" href="{% static 'images/ghfconvert.ico' %}" type="image/x-icon">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome -->
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/youtube_mp4.css' %}">
     <link rel="canonical" href="https://ghfconvert.online/">
     <script src="{% static 'js/gtag.js' %}"></script> 
-    <style>
-        .navbar {
-            background-color: #ffffff; /* Branco */
-        }
-        #statusMessage {
-            display: none;
-        }
-    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light">
@@ -41,6 +34,29 @@
             </ul>
         </div>
     </nav>
+
+<div class="menu-container">
+    <div class="menu-wrapper">
+        <div class="menu-text">
+            <strong>Escolha abaixo o formato que deseja baixar</strong>
+        </div>
+        
+        <ul class="menu">
+            <li class="menu-item">
+                <a href="{% url 'youtube' %}">
+                    <i class="bi bi-play-btn"></i>
+                    <span>MP4</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="{% url 'youtube_audio' %}">
+                    <i class="bi bi-file-earmark-music"></i>
+                    <span>MP3</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
 
     <div class="container text-center mt-5">
         <h1 class="display-4">Baixador de vídeo do <span style="color: rgb(3, 142, 255);">YouTube</span></h1>
@@ -64,17 +80,106 @@
             <div class="col-md-8 mx-auto">
                 <img id="thumbnail" src="" alt="Thumbnail" class="img-fluid rounded mb-3">
                 <h3 id="videoTitle">Título do Vídeo</h3>
-                <!-- Status message após título do vídeo -->
                 <div id="statusMessage" class="alert alert-info mt-4" role="alert"></div>
                 <select id="formatSelector" class="form-control mb-3">
-                    <!-- Opções de formato serão adicionadas aqui -->
                 </select>
                 <button id="downloadButton" class="btn btn-primary">Baixar</button>
             </div>
         </div>
     </div>
 
-    <!-- Rodapé -->
+<div class="instructions text-center">
+    <h2>Como baixar o vídeo do <span style="color: rgb(3, 142, 255);">YouTube</span>?</h2>
+    <div id="instructionsCarousel" class="carousel slide d-md-none" data-ride="carousel" data-interval="3000">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="row justify-content-center">
+                    <div class="col-md-4 d-flex flex-column align-items-center">
+                        <div class="icon-wrapper">
+                            <i class="bi bi-clipboard" style="font-size: 40px; color: #007bff;"></i>
+                        </div>
+                        <p class="instruction-text"><strong>PASSO 1:</strong><br>Copie o URL do vídeo do YouTube<br>que deseja baixar.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="row justify-content-center">
+                    <div class="col-md-4 d-flex flex-column align-items-center">
+                        <div class="icon-wrapper">
+                            <i class="bi bi-hand-index-thumb" style="font-size: 40px; color: #007bff;"></i>
+                        </div>
+                        <p class="instruction-text"><strong>PASSO 2:</strong><br>Cole o URL no campo de pesquisa<br>e clique no botão para iniciar a conversão.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="row justify-content-center">
+                    <div class="col-md-4 d-flex flex-column align-items-center">
+                        <div class="icon-wrapper">
+                            <i class="bi bi-cloud-download" style="font-size: 40px; color: #007bff;"></i>
+                        </div>
+                        <p class="instruction-text"><strong>PASSO 3:</strong><br>Selecione a qualidade para baixar o arquivo<br>no seu dispositivo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-none d-md-block">
+        <div class="row justify-content-center">
+            <div class="col-md-4 d-flex flex-column align-items-center">
+                <div class="icon-wrapper">
+                    <i class="bi bi-clipboard" style="font-size: 40px; color: #007bff;"></i>
+                </div>
+                <p class="instruction-text"><strong>PASSO 1:</strong><br>Copie o URL do vídeo do YouTube<br>que deseja baixar.</p>
+            </div>
+            <div class="col-md-4 d-flex flex-column align-items-center">
+                <div class="icon-wrapper">
+                    <i class="bi bi-hand-index-thumb" style="font-size: 40px; color: #007bff;"></i>
+                </div>
+                <p class="instruction-text"><strong>PASSO 2:</strong><br>Cole o URL no campo de pesquisa<br>e clique no botão para iniciar a conversão.</p>
+            </div>
+            <div class="col-md-4 d-flex flex-column align-items-center">
+                <div class="icon-wrapper">
+                    <i class="bi bi-cloud-download" style="font-size: 40px; color: #007bff;"></i>
+                </div>
+                <p class="instruction-text"><strong>PASSO 3:</strong><br>Selecione a qualidade para baixar o arquivo<br>no seu dispositivo.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container benefits text-center">
+    <h3>Por que escolher o <a class="navbar-brand" style="font-size: inherit;"><span style="color: rgb(3, 142, 255);">GHF</span>Convert?</a></h3><br>
+
+    <div class="row">
+        <div class="col-md-4 col-sm-12 d-flex justify-content-center mb-4">
+            <div class="benefit-item">
+                <div class="icon-container">
+                    <i class="bi bi-clock-history"></i>
+                </div>
+                <p><strong>Rápido e Fácil</strong></p>
+                <p>Com <span style="color: rgb(3, 142, 255);">GHF</span><b>Convert</b>, basta copiar a URL do vídeo do YouTube, colar no campo de pesquisa e selecionar o formato desejado para baixar.</p>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12 d-flex justify-content-center mb-4">
+            <div class="benefit-item">
+                <div class="icon-container">
+                    <i class="bi bi-film"></i>
+                </div>
+                <p><strong>Compatível com Vários Formatos e Qualidades</strong></p>
+                <p>O <span style="color: rgb(3, 142, 255);">GHF</span><b>Convert</b> permite baixar vídeos em diversos formatos, como mp4, webm, mp3, m4a, e em diferentes qualidades, incluindo 144p, 240p, 360p, 480p, 720p e 1080p.</p>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12 d-flex justify-content-center mb-4">
+            <div class="benefit-item">
+                <div class="icon-container">
+                    <i class="bi bi-shield-check"></i>
+                </div>
+                <p><strong>Sempre Seguro e Gratuito</strong></p>
+                <p>O <span style="color: rgb(3, 142, 255);">GHF</span><b>Convert</b> é totalmente GRATUITO. Tudo o que você precisa é de um navegador e uma conexão com a internet para baixar vídeos, sem a necessidade de criar uma conta.</p>
+            </div>
+        </div>
+    </div>
+</div>
     <footer class="footer">
         <div class="container text-center">
             <a class="navbar-brand" href="/"><span style="color: rgb(3, 142, 255);">GHF</span>Convert</a>
@@ -89,85 +194,9 @@
 
     <div class="footer-spacer"></div>
 
-    <script>
-        document.getElementById('videoForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const url = document.querySelector('input[name="url"]').value.trim();
+    <script src="{% static 'js/ads.js' %}"></script>
+    <script src="{% static 'js/youtube_mp4.js' %}"></script>
 
-            if (!url) {
-                alert('Por favor, insira uma URL válida.');
-                return;
-            }
-
-            const formData = new FormData(this);
-            document.getElementById('statusMessage').style.display = 'block';
-            document.getElementById('statusMessage').innerText = 'Buscando informações do vídeo...';
-
-            fetch('', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    document.getElementById('statusMessage').innerText = data.error;
-                    return;
-                }
-
-                document.getElementById('videoInfo').style.display = 'block';
-                document.getElementById('thumbnail').src = data.thumbnail;
-                document.getElementById('videoTitle').innerText = data.title;
-
-                const formatSelector = document.getElementById('formatSelector');
-                formatSelector.innerHTML = '';
-                data.formats.forEach(format => {
-                    const option = document.createElement('option');
-                    option.value = format.format_id;
-                    const filesizeMB = (format.filesize / (1024 * 1024)).toFixed(2); 
-                    option.textContent = `${format.format_note} - ${filesizeMB} MB`;
-                    formatSelector.appendChild(option);
-                });
-
-                document.getElementById('statusMessage').innerText = 'Selecione a qualidade e clique em Baixar.';
-                document.getElementById('downloadButton').addEventListener('click', function() {
-                    const formatId = formatSelector.value;
-                    document.getElementById('statusMessage').innerText = 'Iniciando o download...';
-
-                    fetch('/download/', {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRFToken': document.querySelector('[name="csrfmiddlewaretoken"]').value
-                        },
-                        body: new URLSearchParams({url: url, format_id: formatId})
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            return response.blob();
-                        } else {
-                            return response.json().then(data => {
-                                document.getElementById('statusMessage').innerText = data.error || 'Falha no download.';
-                            });
-                        }
-                    })
-                    .then(blob => {
-                        const a = document.createElement('a');
-                        a.href = URL.createObjectURL(blob);
-                        a.download = `${data.title}.mp4`; 
-                        a.click();
-                        document.getElementById('statusMessage').innerText = 'Download concluído!';
-                    });
-                });
-            })
-            .catch(error => {
-                document.getElementById('statusMessage').innerText = 'Erro ao buscar informações do vídeo.';
-            });
-        });
-
-        document.getElementById('submitButton').addEventListener('click', function() {
-            const newTab = window.open('about:blank', '_blank');
-            newTab.location.href = 'https://www.highrevenuenetwork.com/sqjwn4h0v?key=b996c42894ea3f6ebf81baab9cacf7fe'; /* LINK ADS */
-        });
-    </script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

@@ -1,0 +1,469 @@
+/* Reseta o margin e padding e define o tamanho da fonte */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Estilo do conteúdo principal */
+.container {
+    flex: 1;
+}
+
+/* Menu */
+.navbar {
+    background-color: #ffffff; /* Fundo branco */
+    color: #333; /* Cor do texto */
+    border-bottom: 1px solid #e0e0e0; /* Borda inferior para destaque */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra leve */
+}
+
+.navbar-nav .nav-link {
+    color: #333; /* Cor do texto dos links */
+    text-decoration: none; /* Remove o sublinhado dos links */
+}
+
+.navbar-nav .nav-link:hover {
+    color: #000; /* Cor do texto dos links ao passar o mouse */
+    text-decoration: none; /* Remove o sublinhado ao passar o mouse */
+}
+
+/* Estilo do logotipo e links no menu */
+.navbar-brand {
+    color: black; /* Preto para o logotipo */
+    text-decoration: none; /* Remove o sublinhado */
+    font-size: 20px; /* Tamanho da fonte ajustado para 20px */
+}
+
+.navbar-brand span {
+    color: rgb(3, 142, 255); /* Azul para parte do logotipo */
+}
+
+.navbar-brand:hover {
+    color: black; /* Preto ao passar o mouse */
+}
+
+.navbar-brand:hover span {
+    color: rgb(3, 142, 255); /* Azul para parte do logotipo ao passar o mouse */
+}
+
+.navbar-nav .nav-item.active .nav-link {
+    color: #007bff; /* Cor para o item ativo */
+    font-weight: bold; /* Deixe o texto mais proeminente */
+}
+
+.form-text.text-muted.mt-2 a {
+    text-decoration: none; /* Remove o sublinhado */
+}
+
+.form-text.text-muted.mt-2 a:hover {
+    text-decoration: none; /* Remove o sublinhado ao passar o mouse */
+}
+
+/* Formulário */
+.form-inline {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Informações do vídeo */
+#videoInfo {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Centraliza o texto dentro da div */
+}
+
+#videoInfo .row {
+    justify-content: center; /* Centraliza o conteúdo da coluna */
+}
+
+#videoInfo .col-md-8 {
+    text-align: center; /* Centraliza o conteúdo dentro da coluna */
+}
+
+.display-4 {
+    font-size: 2.5rem;
+    font-weight: 300;
+}
+
+.lead {
+    font-size: 1.25rem;
+    font-weight: 300;
+}
+
+.input-group {
+    max-width: 100%;
+}
+
+input[type="text"] {
+    flex-grow: 1;
+    border-radius: 0.25rem 0 0 0.25rem;
+}
+
+button[type="submit"] {
+    border-radius: 0 0.25rem 0.25rem 0;
+}
+
+#videoTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.alert {
+    font-size: 1rem;
+}
+
+small.form-text.text-muted {
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+#thumbnail {
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto; /* Centraliza a imagem horizontalmente */
+    display: block; /* Garante que a imagem seja exibida como um bloco */
+}
+
+/* Rodapé */
+.footer {
+    background-color: #ffffff; /* Fundo branco */
+    color: #333;
+    padding: 8px 0; /* Reduzido para diminuir a altura do rodapé */
+    position: relative;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Logotipo no rodapé */
+.footer .navbar-brand {
+    margin-bottom: 3px; /* Reduzido para diminuir o espaço abaixo do logotipo */
+}
+
+/* Links no rodapé */
+.footer-links {
+    display: flex; /* Usa flex para alinhar os links e separadores */
+    flex-wrap: wrap; /* Permite que os links se ajustem em uma linha */
+    justify-content: center; /* Centraliza os links horizontalmente */
+    margin: 0; /* Remove margin para reduzir o espaço desnecessário */
+    padding: 0; /* Remove padding para garantir que os links fiquem no lugar */
+}
+
+.footer-links a {
+    color: black; /* Preto para links no rodapé */
+    text-decoration: none; /* Remove o sublinhado */
+    margin: 0 4px; /* Espaço ajustado entre os links */
+    font-size: 12px; /* Tamanho da fonte ajustado para 12px */
+    line-height: 1.4; /* Alinha o texto do link com os '|' */
+}
+
+.footer-links a:not(:last-child)::after {
+    content: '|'; /* Adiciona o separador '|' após cada link, exceto o último */
+    color: #6c757d; /* Cor cinza para o separador '|' */
+    margin: 0 4px; /* Espaço ajustado ao redor do separador */
+    font-size: 12px; /* Tamanho da fonte ajustado para 12px */
+    line-height: 1.4; /* Alinha verticalmente com o texto */
+}
+
+.footer-links a:hover {
+    color: black; /* Preto ao passar o mouse */
+    text-decoration: none; /* Remove o sublinhado ao passar o mouse */
+}
+
+/* Estilo para o texto no rodapé */
+.footer-text {
+    margin-top: 1px; /* Reduzido para diminuir o espaço acima do texto */
+    font-size: 12px; /* Tamanho da fonte ajustado para 12px */
+    color: #6c757d; /* Cinza */
+    line-height: 1.4; /* Alinha o texto com os links do rodapé */
+}
+
+.navbar {
+    background-color: #ffffff; /* Branco */
+}
+#statusMessage {
+    display: none;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+.navbar {
+    background-color: #ffffff; /* Branco */
+}
+#statusMessage {
+    display: none;
+}
+.feature-box {
+    margin-top: 50px;
+}
+.feature-box h3 {
+    color: rgb(3, 142, 255);
+}
+.feature-box img {
+    max-width: 100px;
+    margin-bottom: 20px;
+}
+.instructions, .benefits {
+    margin-top: 50px;
+}
+.instructions h2, .benefits h2 {
+    color: rgb(3, 142, 255);
+    margin-bottom: 30px;
+}
+.instructions p, .benefits p {
+    margin-bottom: 20px;
+}
+.instructions img, .benefits img {
+    max-width: 60px;
+    margin-bottom: 15px;
+}
+.footer {
+    margin-top: 50px;
+}
+
+
+
+/* Menu Centralizado */
+.menu-container {
+display: flex;
+justify-content: center;
+margin: 20px 0;
+}
+
+/* Menu com fundo branco */
+.menu-wrapper {
+background: #ffffff; /* Cor de fundo branca */
+border-radius: 10px; /* Bordas arredondadas */
+padding: 10px 20px; /* Espaçamento interno */
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transições suaves */
+display: inline-block; /* Ajusta o tamanho ao conteúdo */
+text-align: center; /* Centraliza o texto e os ícones dentro do menu */
+}
+
+/* Efeito ao passar o mouse sobre o menu */
+.menu-wrapper:hover {
+transform: translateY(-5px); /* Efeito de elevação ao passar o mouse */
+box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Sombra mais intensa ao passar o mouse */
+}
+
+/* Texto dentro da div do menu */
+.menu-text {
+margin-bottom: 10px; /* Espaçamento abaixo do texto */
+font-size: 1rem; /* Tamanho do texto */
+color: #333; /* Cor do texto */
+}
+
+/* Menu */
+.menu {
+display: flex;
+justify-content: center;
+list-style: none;
+padding: 0;
+margin: 0;
+}
+
+/* Itens do Menu */
+.menu-item {
+margin: 0 10px; /* Ajuste a margem horizontal conforme necessário */
+text-align: center;
+}
+
+/* Remover sublinhado dos links */
+.menu-item a {
+text-decoration: none; /* Remove o sublinhado */
+color: #333; /* Cor do texto padrão */
+transition: color 0.3s ease, transform 0.3s ease; /* Transições suaves */
+}
+
+/* Estilo para item selecionado */
+.menu-item a.active,
+.menu-item a:hover {
+color: #007bff; /* Cor azul ao passar o mouse ou quando ativo */
+transform: scale(1.2); /* Efeito de aumento ao passar o mouse */
+}
+
+/* Estilo dos ícones */
+.menu-item i {
+font-size: 1.5rem; /* Tamanho do ícone */
+color: #333; /* Cor do ícone */
+transition: color 0.3s ease, transform 0.3s ease; /* Transições suaves */
+display: inline-flex;
+align-items: center;
+justify-content: center;
+width: 40px; /* Largura do círculo */
+height: 40px; /* Altura do círculo */
+border-radius: 50%; /* Círculo */
+background: #ffffff; /* Fundo branco */
+border: 2px solid #ffffff; /* Contorno branco */
+}
+
+/* Estilo ao passar o mouse sobre os ícones */
+.menu-item:hover i {
+color: #007bff; /* Cor do ícone ao passar o mouse */
+background: #ffffff; /* Fundo branco ao passar o mouse */
+border: 2px solid #007bff; /* Contorno azul ao passar o mouse */
+transform: scale(1.2); /* Efeito de aumento do ícone ao passar o mouse */
+}
+
+/* Estilo do texto abaixo dos ícones */
+.menu-item span {
+display: block;
+margin-top: 5px;
+font-size: 0.9rem; /* Tamanho menor do texto */
+color: #333; /* Cor do texto */
+}
+
+/* Ajustes para dispositivos móveis */
+@media (max-width: 768px) {
+.menu-item i {
+font-size: 1.2rem; /* Tamanho menor do ícone em dispositivos móveis */
+}
+
+.menu-item span {
+font-size: 0.8rem; /* Tamanho menor do texto em dispositivos móveis */
+}
+}
+
+.instructions {
+    background-color: #ffffff; /* Fundo branco para a seção de instruções */
+    padding: 30px 0; /* Espaçamento interno superior e inferior */
+    border-radius: 8px; /* Bordas arredondadas, opcional */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil para destaque */
+    margin-top: 50px; /* Espaçamento superior */
+    width: 100%; /* Garante que a seção ocupe toda a largura disponível */
+    position: relative; /* Necessário para o posicionamento absoluto dos pseudo-elementos */
+    left: 0; /* Garante que a seção comece do canto esquerdo */
+    right: 0; /* Garante que a seção vá até o canto direito */
+}
+
+.icon-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px; /* Largura do círculo */
+    height: 80px; /* Altura do círculo */
+    border-radius: 50%; /* Círculo redondo */
+    background-color: #ffffff; /* Fundo branco */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    margin: 0 auto; /* Centraliza o círculo */
+    margin-bottom: 10px; /* Espaço abaixo do ícone */
+}
+
+.icon-wrapper i {
+    font-size: 40px; /* Tamanho do ícone */
+}
+
+.icon-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+    border: 3px solid rgba(0, 0, 0, 0.1); /* Círculo com contraste leve */
+    z-index: -1;
+}
+
+.instruction-text {
+    font-size: 14px; /* Tamanho do texto */
+    margin-top: 0; /* Remove o espaço acima do texto */
+    line-height: 1.4; /* Ajusta o espaçamento entre linhas */
+    text-align: center; /* Centraliza o texto */
+}
+
+.instructions h2 {
+font-size: 24px; /* Tamanho do texto para dispositivos maiores */
+color: #000000; /* Altera a cor do texto para preto */
+margin-bottom: 30px; /* Espaço abaixo do título */
+}
+
+/* Esconde os controles de navegação e indicadores em dispositivos móveis */
+.carousel-control-prev, .carousel-control-next {
+    display: none !important;
+}
+
+.carousel-indicators {
+    display: none !important;
+}
+
+/* Remove transição entre itens do carrossel */
+.carousel-item {
+    transition: none !important;
+}
+
+@media (max-width: 768px) {
+.instructions h2 {
+    font-size: 20px; /* Diminui o tamanho do texto para dispositivos móveis */
+    /* A cor preta já está definida acima, então não é necessário repetir */
+}
+}
+
+.benefit-item {
+    position: relative;
+    padding: 2rem;
+    background-color: #ffffff;
+    border: 2px solid #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Garante que o item se ajuste ao tamanho da coluna */
+    text-align: center;
+}
+
+.icon-container {
+    position: relative;
+    width: 4rem;
+    height: 4rem;
+    margin: 0 auto 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon-container::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: calc(100% + 20px);
+    height: calc(100% + 20px);
+    border: 2px solid rgba(3, 142, 255, 0.2);
+    border-radius: 50%;
+}
+
+.icon-container i {
+    z-index: 1;
+    font-size: 2rem;
+    color: rgb(3, 142, 255);
+}
+
+.benefit-item p {
+    margin-top: 1rem;
+}
+
+.benefit-item strong {
+    display: block;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
