@@ -9,6 +9,6 @@ class CleanupTemporaryFilesMiddleware(MiddlewareMixin):
             file_path = request._delete_temp_file
             if os.path.exists(file_path):
                 # Aguarda um breve período antes de remover o arquivo
-                time.sleep(5)
+                time.sleep(30)
                 os.remove(file_path)
         return response

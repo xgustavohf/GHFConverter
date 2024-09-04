@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import index, download_video_view, termos_uso, instagram_download_view, instagram_page, download_progress, politica_privacidade, contato, facebook, download_video_facebook, youtube
+from .views import index, download_video_view, termos_uso, instagram_download_view, instagram_page, download_progress, politica_privacidade, contato, facebook, download_video_facebook, youtube, check_download_status
 from django.conf import settings
 from django.conf.urls.static import static
 from .views import facebook, download_video_facebook, serve_audio
@@ -19,6 +19,7 @@ urlpatterns = [
     path('politica-de-privacidade/', politica_privacidade, name='politica_privacidade'),
     path('contato/', contato, name='contato'),
     path('youtube-mp3/', views.youtube_audio, name='youtube_audio'),
+    path('check_download_status/<str:filename>/', check_download_status, name='check_download_status'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

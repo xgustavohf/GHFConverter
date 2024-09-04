@@ -14,6 +14,7 @@ import time
 import tempfile
 import os
 
+
 def termos_uso(request):
     return render(request, 'termos.html')  
 
@@ -44,6 +45,20 @@ def index(request):
     
     return render(request, 'download.html', {'form': form})
 
+
+def remove_file_later(file_path, delay=30):
+    """Remove o arquivo após um certo atraso."""
+    def remove_file():
+        time.sleep(delay)
+        if os.path.exists(file_path):
+            os.remove(file_path)
+    
+    thread = threading.Thread(target=remove_file)
+    thread.start()
+
+
+#===============YOUTUBE===============#
+
 def youtube(request):
     if request.method == 'POST':
         form = YouTubeDownloadForm(request.POST)
@@ -58,7 +73,6 @@ def youtube(request):
         form = YouTubeDownloadForm()
     
     return render(request, 'youtube.html', {'form': form})
-
 
 
 def download_video_view(request):
@@ -109,6 +123,9 @@ def download_progress(request, task_id):
         }
     return JsonResponse(response)
 
+
+#===============INSTAGRAM===============#
+
 def instagram_page(request):
     return render(request, 'instagram.html')
 
@@ -139,15 +156,7 @@ def instagram_download_view(request):
     return JsonResponse({'error': 'Método não permitido'}, status=405)
 
 
-def remove_file_later(file_path, delay=5):
-    """Remove o arquivo após um certo atraso."""
-    def remove_file():
-        time.sleep(delay)
-        if os.path.exists(file_path):
-            os.remove(file_path)
-    
-    thread = threading.Thread(target=remove_file)
-    thread.start()
+#===============FACEBOOK===============#
 
 def facebook(request):
     if request.method == 'POST':
@@ -167,7 +176,6 @@ def facebook(request):
     return render(request, 'facebook.html')
 
 
-
 def download_video_facebook(request):
     if request.method == 'POST':
         url = request.POST.get('url')
@@ -184,6 +192,9 @@ def download_video_facebook(request):
             return JsonResponse({'error': str(e)}, status=400)
 
 
+
+#===============YOUTUBE MP3===============#
+
 def youtube_audio(request):
     if request.method == 'POST':
         url = request.POST.get('url')
@@ -191,38 +202,26 @@ def youtube_audio(request):
         if not url:
             return JsonResponse({'error': 'URL não fornecida'}, status=400)
 
-        # Use MEDIA_ROOT para salvar o arquivo
-        output_dir = settings.MEDIA_ROOT
+        # Obter informações do vídeo sem fazer o download
         ydl_opts = {
             'format': 'bestaudio/best',
-            'postprocessors': [{
-                'key': 'FFmpegExtractAudio',
-                'preferredcodec': 'mp3',
-                'preferredquality': '192',
-            }],
-            'outtmpl': os.path.join(output_dir, '%(id)s.%(ext)s'),
             'noplaylist': True,
             'quiet': True,
         }
         try:
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                info = ydl.extract_info(url, download=True)
-                audio_file_path = ydl.prepare_filename(info)
-                audio_file_path = audio_file_path.rsplit('.', 1)[0] + '.mp3'
+                info = ydl.extract_info(url, download=False)
                 
-                # Check if file exists in MEDIA_ROOT
-                if not os.path.exists(audio_file_path):
-                    return JsonResponse({'error': 'Arquivo de áudio não encontrado após o download.'}, status=500)
-                
-                # Atualize a URL para refletir a pasta MEDIA_ROOT
-                formats = [
-                    {
-                        'url': f'/download/{os.path.basename(audio_file_path)}',
-                        'quality': 'High',
-                        'bitrate': '192'
-                    }
-                ]
+                # Iniciar o download em segundo plano
+                download_thread = threading.Thread(target=download_and_save_audio, args=(url, info['id']))
+                download_thread.start()
 
+                # Preparar a resposta com informações do vídeo
+                formats = [{
+                    'url': f'/download/{info["id"]}.mp3',
+                    'quality': 'alta',
+                    'bitrate': '192'
+                }]
                 return JsonResponse({
                     'title': info.get('title'),
                     'thumbnail': info.get('thumbnail'),
@@ -234,13 +233,37 @@ def youtube_audio(request):
 
     return render(request, 'youtube_audio.html')
 
+
+def download_and_save_audio(url, video_id):
+    ydl_opts = {
+        'format': 'bestaudio/best',
+        'postprocessors': [{
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'mp3',
+            'preferredquality': '192',
+        }],
+        'outtmpl': os.path.join(settings.MEDIA_ROOT, f'{video_id}.%(ext)s'),
+        'noplaylist': True,
+        'quiet': True,
+    }
+    try:
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([url])
+    except Exception as e:
+        print(f"Erro ao baixar o áudio: {str(e)}")
+
+
 def serve_audio(request, filename):
     file_path = os.path.join(settings.MEDIA_ROOT, filename)
     if os.path.exists(file_path):
         response = FileResponse(open(file_path, 'rb'), content_type='audio/mpeg')
-
-        # Define o caminho do arquivo a ser excluído após o download
-        request._delete_temp_file = file_path
+        remove_file_later(file_path)  # Remover o arquivo após o download
         return response
     else:
+        print(f"Arquivo não encontrado: {file_path}")  # Para depuração
         raise Http404("Arquivo não encontrado")
+
+def check_download_status(request, filename):
+    file_path = os.path.join(settings.MEDIA_ROOT, filename)
+    file_exists = os.path.exists(file_path)
+    return JsonResponse({'ready': file_exists})

@@ -197,69 +197,91 @@
     <div class="footer-spacer"></div>
 
     <script>
-        document.getElementById('audioForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const formData = new FormData(this);
-            fetch('', {
-                method: 'POST',
-                body: formData
-            })
+document.getElementById('audioForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const formData = new FormData(this);
+    fetch('', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert('Erro: ' + data.error);
+        } else {
+            document.getElementById('audioInfo').style.display = 'block';
+            document.getElementById('thumbnail').src = data.thumbnail;
+            document.getElementById('audioTitle').textContent = data.title;
+
+            // Preenche as opções de qualidade no seletor
+            const formatSelector = document.getElementById('formatSelector');
+            formatSelector.innerHTML = ''; // Limpa as opções anteriores
+            data.formats.forEach(format => {
+                const option = document.createElement('option');
+                option.value = format.url.split('/').pop(); // Apenas o nome do arquivo
+                option.textContent = `${format.quality} (${format.bitrate} kbps)`;
+                formatSelector.appendChild(option);
+            });
+        }
+    })
+    .catch(error => {
+        alert('Erro ao processar a solicitação.');
+        console.error('Erro:', error);
+    });
+});
+
+
+document.getElementById('downloadButton').addEventListener('click', function() {
+    const selectedFormatUrl = document.getElementById('formatSelector').value;
+    if (selectedFormatUrl) {
+        // Exibir mensagem de status
+        const statusMessage = document.createElement('div');
+        statusMessage.id = 'statusMessage';
+        statusMessage.textContent = 'Realizando download, por favor, aguarde...';
+        document.getElementById('audioInfo').appendChild(statusMessage);
+
+        // Verificar o status do download
+        const statusUrl = `/check_download_status/${encodeURIComponent(selectedFormatUrl)}`;
+        fetch(statusUrl)
             .then(response => response.json())
             .then(data => {
-                if (data.error) {
-                    alert('Erro: ' + data.error);
+                if (data.ready) {
+                    // Se o arquivo estiver pronto, iniciar o download
+                    const downloadUrl = `/download/${encodeURIComponent(selectedFormatUrl)}`;
+                    fetch(downloadUrl)
+                        .then(response => {
+                            if (response.ok) {
+                                return response.blob();
+                            }
+                            throw new Error('Erro ao fazer o download.');
+                        })
+                        .then(blob => {
+                            const url = window.URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = selectedFormatUrl; // Nome do arquivo a ser baixado
+                            a.click();
+                            window.URL.revokeObjectURL(url);
+                        })
+                        .catch(error => {
+                            alert('Erro ao baixar o arquivo de áudio.');
+                            console.error('Erro:', error);
+                        });
                 } else {
-                    document.getElementById('audioInfo').style.display = 'block';
-                    document.getElementById('thumbnail').src = data.thumbnail;
-                    document.getElementById('audioTitle').textContent = data.title;
-
-                    // Preenche as opções de qualidade no seletor
-                    const formatSelector = document.getElementById('formatSelector');
-                    formatSelector.innerHTML = ''; // Limpa as opções anteriores
-                    data.formats.forEach(format => {
-                        const option = document.createElement('option');
-                        option.value = format.url.split('/').pop(); // Apenas o nome do arquivo
-                        option.textContent = `${format.quality} (${format.bitrate} kbps)`;
-                        formatSelector.appendChild(option);
-                    });
+                    // Se o arquivo não estiver pronto, exibir a mensagem de status
+                    document.getElementById('statusMessage').textContent = 'O download ainda está sendo processado. Por favor, aguarde alguns minutos e tente novamente.';
                 }
             })
             .catch(error => {
-                alert('Erro ao processar a solicitação.');
+                alert('Erro ao verificar o status do download.');
                 console.error('Erro:', error);
             });
-        });
+    } else {
+        alert('Por favor, selecione uma qualidade para baixar.');
+    }
+});
 
-        document.getElementById('downloadButton').addEventListener('click', function() {
-            const selectedFormatUrl = document.getElementById('formatSelector').value;
-            if (selectedFormatUrl) {
-                // Construa a URL do arquivo no formato: /media/filename.mp3
-                const downloadUrl = `/download/${encodeURIComponent(selectedFormatUrl)}`;
-                
-                // Enviar uma solicitação GET para o URL de download
-                fetch(downloadUrl)
-                    .then(response => {
-                        if (response.ok) {
-                            return response.blob();
-                        }
-                        throw new Error('Erro ao fazer o download.');
-                    })
-                    .then(blob => {
-                        const url = window.URL.createObjectURL(blob);
-                        const a = document.createElement('a');
-                        a.href = url;
-                        a.download = selectedFormatUrl; // Nome do arquivo a ser baixado
-                        a.click();
-                        window.URL.revokeObjectURL(url);
-                    })
-                    .catch(error => {
-                        alert('Erro ao baixar o arquivo de áudio.');
-                        console.error('Erro:', error);
-                    });
-            } else {
-                alert('Por favor, selecione uma qualidade para baixar.');
-            }
-        });
+
     </script>
     
 
