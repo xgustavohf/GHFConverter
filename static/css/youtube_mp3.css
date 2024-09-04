@@ -461,3 +461,15 @@ margin-bottom: 30px; /* Espaço abaixo do título */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra para profundidade */
     text-align: center; /* Centraliza o texto dentro da div */
 }
+
+.info-wrapper {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+#statusMessage {
+    font-size: 1rem;
+}
