@@ -76,24 +76,6 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Informações do vídeo */
-#videoInfo {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center; /* Centraliza o texto dentro da div */
-}
-
-#videoInfo .row {
-    justify-content: center; /* Centraliza o conteúdo da coluna */
-}
-
-#videoInfo .col-md-8 {
-    text-align: center; /* Centraliza o conteúdo dentro da coluna */
-}
 
 .display-4 {
     font-size: 2.5rem;
@@ -459,4 +441,23 @@ margin-bottom: 30px; /* Espaço abaixo do título */
     display: block;
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
+}
+
+#audioInfo .audio-info-container {
+    background-color: #ffffff; /* Fundo branco */
+    border-radius: 8px;        /* Bordas arredondadas */
+    padding: 20px;             /* Padding interno */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para profundidade */
+    max-width: 600px;          /* Largura máxima para manter o conteúdo centralizado */
+    margin: 0 auto;           /* Centralizar a div */
+}
+
+.audio-info-container {
+    max-width: 800px; /* Ajusta a largura máxima para 800px */
+    margin: 20px auto; /* Centraliza a div com uma margem de 20px */
+    padding: 20px; /* Espaçamento interno */
+    background: #fff; /* Fundo branco */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra para profundidade */
+    text-align: center; /* Centraliza o texto dentro da div */
 }
