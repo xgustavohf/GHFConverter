@@ -10,44 +10,13 @@
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand" href="/"><span style="color: rgb(3, 142, 255);">GHF</span>Convert</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'youtube' %}">YouTube <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'facebook' %}">Facebook</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'instagram_page' %}">Instagram</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    {% include 'navegacao.html' %}
     <br><br>
     <div class="container">
         <h1>Entre em Contato Conosco</h1>
         <p>Se você tiver qualquer dúvida, reclamação ou sugestão sobre nossos serviços, não hesite em nos contatar. Envie um e-mail para <a href="mailto:suporte@ghfconvert.online">suporte@ghfconvert.online</a> e nossa equipe responderá o mais rápido possível.</p>
         <p>Estamos disponíveis para ajudar de segunda a sexta-feira, das 9h às 18h. Agradecemos seu feedback e faremos o possível para atender suas necessidades.</p>
     </div>
-
-        <!-- Rodapé -->
-        <footer class="footer">
-            <div class="container text-center">
-                <a class="navbar-brand" href="/"><span style="color: rgb(3, 142, 255);">GHF</span>Convert</a>
-                <div class="footer-links">
-                    <a href="{% url 'politica_privacidade' %}">Política de Privacidade</a>
-                    <a href="{% url 'termos' %}">Termos de Uso</a>
-                    <a href="{% url 'contato' %}">Contato</a>
-                </div>
-                <p class="footer-text">© 2024 GHFConvert. Todos os direitos reservados.</p>
-            </div>
-        </footer>
-
+        {% include 'rodape.html' %}
 </body>
 </html>

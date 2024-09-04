@@ -465,20 +465,8 @@
 
 </style>
 
-
-
     <!-- Rodapé -->
-    <footer class="footer">
-        <div class="container text-center">
-            <a class="navbar-brand" href="/"><span style="color: rgb(3, 142, 255);">GHF</span>Convert</a>
-            <div class="footer-links">
-                <a href="{% url 'politica_privacidade' %}">Política de Privacidade</a>
-                <a href="{% url 'termos' %}">Termos de Uso</a>
-                <a href="{% url 'contato' %}">Contato</a>
-            </div>
-            <p class="footer-text">© 2024 GHFConvert. Todos os direitos reservados.</p>
-        </div>
-    </footer>
+    {% include 'rodape.html' %}
 
     <div class="footer-spacer"></div>
 

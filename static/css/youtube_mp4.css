@@ -353,8 +353,6 @@ font-size: 0.8rem; /* Tamanho menor do texto em dispositivos móveis */
     margin-top: 50px; /* Espaçamento superior */
     width: 100%; /* Garante que a seção ocupe toda a largura disponível */
     position: relative; /* Necessário para o posicionamento absoluto dos pseudo-elementos */
-    left: 0; /* Garante que a seção comece do canto esquerdo */
-    right: 0; /* Garante que a seção vá até o canto direito */
 }
 
 .icon-wrapper {
@@ -394,10 +392,21 @@ font-size: 0.8rem; /* Tamanho menor do texto em dispositivos móveis */
 }
 
 .instructions h2 {
-font-size: 24px; /* Tamanho do texto para dispositivos maiores */
-color: #000000; /* Altera a cor do texto para preto */
-margin-bottom: 30px; /* Espaço abaixo do título */
+    font-size: 24px; /* Tamanho do texto para dispositivos maiores */
+    color: #000000; /* Altera a cor do texto para preto */
+    margin-bottom: 30px; /* Espaço abaixo do título */
 }
+
+.d-md-flex .col-md-4 {
+    flex: 1 1 25%; /* Ajusta o tamanho dos itens */
+    max-width: 25%; /* Limita a largura máxima para que caibam na linha */
+}
+
+@media (max-width: 768px) {
+    .d-md-flex {
+        display: none; /* Oculta os passos lado a lado em telas pequenas */
+    }
+
 
 /* Esconde os controles de navegação e indicadores em dispositivos móveis */
 .carousel-control-prev, .carousel-control-next {
@@ -408,9 +417,17 @@ margin-bottom: 30px; /* Espaço abaixo do título */
     display: none !important;
 }
 
-/* Remove transição entre itens do carrossel */
+.carousel-inner {
+    display: flex; /* Garante que o carrossel use flexbox para alinhar os itens */
+}
+
 .carousel-item {
     transition: none !important;
+}
+
+.carousel-item .row {
+    margin: 0; /* Remove margens para garantir que os itens se ajustem corretamente */
+}
 }
 
 @media (max-width: 768px) {

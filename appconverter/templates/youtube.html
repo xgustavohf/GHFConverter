@@ -15,25 +15,7 @@
     <script src="{% static 'js/gtag.js' %}"></script> 
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand" href="/"><span style="color: rgb(3, 142, 255);">GHF</span>Convert</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'youtube' %}">YouTube <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'facebook' %}">Facebook</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'instagram_page' %}">Instagram</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    {% include 'navegacao.html' %}
 
 <div class="menu-container">
     <div class="menu-wrapper">
@@ -67,7 +49,7 @@
                 <input type="text" name="url" class="form-control" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ" required>
                 <div class="input-group-append">
                     <button id="submitButton" class="btn btn-primary" type="submit">
-                        <i class="fas fa-search"></i> <!-- Usando Font Awesome -->
+                        <i class="fas fa-search"></i> 
                     </button>
                 </div>
             </div>
@@ -88,44 +70,53 @@
         </div>
     </div>
 
-<div class="instructions text-center">
-    <h2>Como baixar o vídeo do <span style="color: rgb(3, 142, 255);">YouTube</span>?</h2>
-    <div id="instructionsCarousel" class="carousel slide d-md-none" data-ride="carousel" data-interval="3000">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <div class="row justify-content-center">
-                    <div class="col-md-4 d-flex flex-column align-items-center">
-                        <div class="icon-wrapper">
-                            <i class="bi bi-clipboard" style="font-size: 40px; color: #007bff;"></i>
+    <div class="instructions text-center">
+        <h2>Como baixar o vídeo do <span style="color: rgb(3, 142, 255);">YouTube</span>?</h2>
+        <div id="instructionsCarousel" class="carousel slide d-md-none" data-ride="carousel" data-interval="3000">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row justify-content-center">
+                        <div class="col-md-4 d-flex flex-column align-items-center">
+                            <div class="icon-wrapper">
+                                <i class="bi bi-clipboard" style="font-size: 40px; color: #007bff;"></i>
+                            </div>
+                            <p class="instruction-text"><strong>PASSO 1:</strong><br>Copie o URL do vídeo do YouTube<br>que deseja baixar.</p>
                         </div>
-                        <p class="instruction-text"><strong>PASSO 1:</strong><br>Copie o URL do vídeo do YouTube<br>que deseja baixar.</p>
                     </div>
                 </div>
-            </div>
-            <div class="carousel-item">
-                <div class="row justify-content-center">
-                    <div class="col-md-4 d-flex flex-column align-items-center">
-                        <div class="icon-wrapper">
-                            <i class="bi bi-hand-index-thumb" style="font-size: 40px; color: #007bff;"></i>
+                <div class="carousel-item">
+                    <div class="row justify-content-center">
+                        <div class="col-md-4 d-flex flex-column align-items-center">
+                            <div class="icon-wrapper">
+                                <i class="bi bi-check2-square" style="font-size: 40px; color: #007bff;"></i>
+                            </div>
+                            <p class="instruction-text"><strong>PASSO 2:</strong><br>Escolha entre os formatos <b>MP3</b> e <b>MP4</b><br>o arquivo que deseja baixar.</p>
                         </div>
-                        <p class="instruction-text"><strong>PASSO 2:</strong><br>Cole o URL no campo de pesquisa<br>e clique no botão para iniciar a conversão.</p>
                     </div>
                 </div>
-            </div>
-            <div class="carousel-item">
-                <div class="row justify-content-center">
-                    <div class="col-md-4 d-flex flex-column align-items-center">
-                        <div class="icon-wrapper">
-                            <i class="bi bi-cloud-download" style="font-size: 40px; color: #007bff;"></i>
+                <div class="carousel-item">
+                    <div class="row justify-content-center">
+                        <div class="col-md-4 d-flex flex-column align-items-center">
+                            <div class="icon-wrapper">
+                                <i class="bi bi-hand-index-thumb" style="font-size: 40px; color: #007bff;"></i>
+                            </div>
+                            <p class="instruction-text"><strong>PASSO 3:</strong><br>Cole o URL no campo de pesquisa<br>e clique no botão para iniciar a conversão.</p>
                         </div>
-                        <p class="instruction-text"><strong>PASSO 3:</strong><br>Selecione a qualidade para baixar o arquivo<br>no seu dispositivo.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row justify-content-center">
+                        <div class="col-md-4 d-flex flex-column align-items-center">
+                            <div class="icon-wrapper">
+                                <i class="bi bi-cloud-download" style="font-size: 40px; color: #007bff;"></i>
+                            </div>
+                            <p class="instruction-text"><strong>PASSO 4:</strong><br>Selecione a qualidade para baixar o arquivo<br>no seu dispositivo.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="d-none d-md-block">
-        <div class="row justify-content-center">
+        <div class="d-none d-md-flex flex-wrap justify-content-center">
             <div class="col-md-4 d-flex flex-column align-items-center">
                 <div class="icon-wrapper">
                     <i class="bi bi-clipboard" style="font-size: 40px; color: #007bff;"></i>
@@ -134,19 +125,24 @@
             </div>
             <div class="col-md-4 d-flex flex-column align-items-center">
                 <div class="icon-wrapper">
+                    <i class="bi bi-check2-square" style="font-size: 40px; color: #007bff;"></i>
+                </div>
+                <p class="instruction-text"><strong>PASSO 2:</strong><br>Escolha entre os formatos <b>MP3</b> e <b>MP4</b><br>o arquivo que deseja baixar.</p>
+            </div>
+            <div class="col-md-4 d-flex flex-column align-items-center">
+                <div class="icon-wrapper">
                     <i class="bi bi-hand-index-thumb" style="font-size: 40px; color: #007bff;"></i>
                 </div>
-                <p class="instruction-text"><strong>PASSO 2:</strong><br>Cole o URL no campo de pesquisa<br>e clique no botão para iniciar a conversão.</p>
+                <p class="instruction-text"><strong>PASSO 3:</strong><br>Cole o URL no campo de pesquisa<br>e clique no botão para iniciar a conversão.</p>
             </div>
             <div class="col-md-4 d-flex flex-column align-items-center">
                 <div class="icon-wrapper">
                     <i class="bi bi-cloud-download" style="font-size: 40px; color: #007bff;"></i>
                 </div>
-                <p class="instruction-text"><strong>PASSO 3:</strong><br>Selecione a qualidade para baixar o arquivo<br>no seu dispositivo.</p>
+                <p class="instruction-text"><strong>PASSO 4:</strong><br>Selecione a qualidade para baixar o arquivo<br>no seu dispositivo.</p>
             </div>
         </div>
     </div>
-</div>
 <div class="container benefits text-center">
     <h3>Por que escolher o <a class="navbar-brand" style="font-size: inherit;"><span style="color: rgb(3, 142, 255);">GHF</span>Convert?</a></h3><br>
 
@@ -180,17 +176,8 @@
         </div>
     </div>
 </div>
-    <footer class="footer">
-        <div class="container text-center">
-            <a class="navbar-brand" href="/"><span style="color: rgb(3, 142, 255);">GHF</span>Convert</a>
-            <div class="footer-links">
-                <a href="{% url 'politica_privacidade' %}">Política de Privacidade</a>
-                <a href="{% url 'termos' %}">Termos de Uso</a>
-                <a href="{% url 'contato' %}">Contato</a>
-            </div>
-            <p class="footer-text">© 2024 GHFConvert. Todos os direitos reservados.</p>
-        </div>
-    </footer>
+
+    {% include 'rodape.html' %}
 
     <div class="footer-spacer"></div>
 
