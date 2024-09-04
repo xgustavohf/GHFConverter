@@ -80,16 +80,12 @@
                     <h3 id="audioTitle">Título do Áudio</h3>
                     <div id="statusMessage" class="alert alert-info mt-3" role="alert" style="display: none;"></div>
                     <select id="formatSelector" class="form-control mb-3">
-                        <!-- Opções de qualidade de áudio serão adicionadas aqui -->
                     </select>
                     <button id="downloadButton" class="btn btn-primary">Baixar</button>
                 </div>
             </div>
         </div>
     </div>
-
-
-    <!-- Instruções de uso -->
     <div class="instructions text-center">
         <h2>Como baixar o áudio do <span style="color: rgb(3, 142, 255);">YouTube</span>?</h2>
         <div id="instructionsCarousel" class="carousel slide d-md-none" data-ride="carousel" data-interval="3000">
@@ -127,7 +123,6 @@
             </div>
         </div>
         <div class="d-none d-md-block">
-            <!-- Conteúdo estático para telas maiores -->
             <div class="row justify-content-center">
                 <div class="col-md-4 d-flex flex-column align-items-center">
                     <div class="icon-wrapper">
@@ -150,8 +145,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Benefícios do GHFConvert -->
     <div class="container benefits text-center">
         <h3>Por que escolher o <a class="navbar-brand" style="font-size: inherit;"><span style="color: rgb(3, 142, 255);">GHF</span>Convert?</a></h3><br>
 
@@ -199,101 +192,9 @@
     </footer>
 
     <div class="footer-spacer"></div>
-
-    <script>
-        document.getElementById('audioForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const formData = new FormData(this);
     
-            // Esconder o statusMessage ao iniciar uma nova consulta
-            const statusMessage = document.getElementById('statusMessage');
-            statusMessage.style.display = 'none';
-            statusMessage.textContent = ''; // Limpa o conteúdo da mensagem
-    
-            fetch('', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    alert('Erro: ' + data.error);
-                } else {
-                    document.getElementById('audioInfo').style.display = 'block';
-                    document.getElementById('thumbnail').src = data.thumbnail;
-                    document.getElementById('audioTitle').textContent = data.title;
-    
-                    // Preenche as opções de qualidade no seletor
-                    const formatSelector = document.getElementById('formatSelector');
-                    formatSelector.innerHTML = ''; // Limpa as opções anteriores
-                    data.formats.forEach(format => {
-                        const option = document.createElement('option');
-                        option.value = format.url.split('/').pop(); // Apenas o nome do arquivo
-                        option.textContent = `${format.quality} (${format.bitrate} kbps)`;
-                        formatSelector.appendChild(option);
-                    });
-                }
-            })
-            .catch(error => {
-                alert('Erro ao processar a solicitação.');
-                console.error('Erro:', error);
-            });
-        });
-    
-        document.getElementById('downloadButton').addEventListener('click', function() {
-            console.log('Download button clicked');
-            const selectedFormatUrl = document.getElementById('formatSelector').value;
-            const statusMessage = document.getElementById('statusMessage');
-            if (selectedFormatUrl) {
-                statusMessage.style.display = 'block';
-                statusMessage.textContent = 'Realizando download, por favor, aguarde...';
-    
-                // Verificar o status do download
-                const statusUrl = `/check_download_status/${encodeURIComponent(selectedFormatUrl)}`;
-                fetch(statusUrl)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.ready) {
-                            const downloadUrl = `/download/${encodeURIComponent(selectedFormatUrl)}`;
-                            fetch(downloadUrl)
-                                .then(response => {
-                                    if (response.ok) {
-                                        return response.blob();
-                                    }
-                                    throw new Error('Erro ao fazer o download.');
-                                })
-                                .then(blob => {
-                                    const url = window.URL.createObjectURL(blob);
-                                    const a = document.createElement('a');
-                                    a.href = url;
-                                    a.download = selectedFormatUrl;
-                                    a.click();
-                                    window.URL.revokeObjectURL(url);
-                                    statusMessage.textContent = 'Download concluído!';
-                                })
-                                .catch(error => {
-                                    statusMessage.textContent = 'Erro ao baixar o arquivo de áudio.';
-                                    console.error('Erro:', error);
-                                });
-                        } else {
-                            statusMessage.textContent = 'O download está em andamento. Por favor, aguarde alguns segundos e tente clicar em "Baixar" novamente.';
-                        }
-                    })
-                    .catch(error => {
-                        statusMessage.textContent = 'Erro ao verificar o status do download.';
-                        console.error('Erro:', error);
-                    });
-            } else {
-                alert('Por favor, selecione uma qualidade para baixar.');
-            }
-        });
-    </script>
-    
-    
-
-    </script>
-    
-    <script src="{% static 'js/ads.js' %}"></script> 
+    <script src="{% static 'js/ads.js' %}"></script>
+    <script src="{% static 'js/youtube_mp3.js' %}"></script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

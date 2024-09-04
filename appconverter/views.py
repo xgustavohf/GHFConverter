@@ -12,6 +12,8 @@ import threading
 import yt_dlp
 import time
 import tempfile
+import re
+import unicodedata
 import os
 
 
@@ -46,7 +48,7 @@ def index(request):
     return render(request, 'download.html', {'form': form})
 
 
-def remove_file_later(file_path, delay=30):
+def remove_file_later(file_path, delay=60):
     """Remove o arquivo após um certo atraso."""
     def remove_file():
         time.sleep(delay)
@@ -213,12 +215,12 @@ def youtube_audio(request):
                 info = ydl.extract_info(url, download=False)
                 
                 # Iniciar o download em segundo plano
-                download_thread = threading.Thread(target=download_and_save_audio, args=(url, info['id']))
+                download_thread = threading.Thread(target=download_and_save_audio, args=(url, info['id'], info.get('title')))
                 download_thread.start()
 
                 # Preparar a resposta com informações do vídeo
                 formats = [{
-                    'url': f'/download/{info["id"]}.mp3',
+                    'url': f'/download/{sanitize_filename(info["title"])}.mp3',
                     'quality': 'alta',
                     'bitrate': '192'
                 }]
@@ -234,7 +236,18 @@ def youtube_audio(request):
     return render(request, 'youtube_audio.html')
 
 
-def download_and_save_audio(url, video_id):
+def sanitize_filename(filename):
+    # Remove caracteres não ASCII e substitui espaços e caracteres especiais por _
+    filename = unicodedata.normalize('NFKD', filename).encode('ASCII', 'ignore').decode('ASCII')
+    filename = re.sub(r'[^\w\s-]', '', filename).strip()
+    filename = re.sub(r'[-\s]+', '_', filename)
+    return filename
+
+
+def download_and_save_audio(url, video_id, title):
+    sanitized_title = sanitize_filename(title)
+    outtmpl = os.path.join(settings.MEDIA_ROOT, f'{sanitized_title}.%(ext)s')
+    
     ydl_opts = {
         'format': 'bestaudio/best',
         'postprocessors': [{
@@ -242,7 +255,7 @@ def download_and_save_audio(url, video_id):
             'preferredcodec': 'mp3',
             'preferredquality': '192',
         }],
-        'outtmpl': os.path.join(settings.MEDIA_ROOT, f'{video_id}.%(ext)s'),
+        'outtmpl': outtmpl,
         'noplaylist': True,
         'quiet': True,
     }
