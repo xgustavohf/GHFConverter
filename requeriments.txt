@@ -22,7 +22,6 @@ instaloader==4.12
 kombu==5.3.7
 mutagen==1.47.0
 prompt_toolkit==3.0.47
-psycopg2==2.9.9
 pycryptodomex==3.20.0
 pydub==0.25.1
 python-dateutil==2.9.0.post0
