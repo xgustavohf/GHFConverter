@@ -58,6 +58,10 @@ body {
     font-weight: bold; /* Deixe o texto mais proeminente */
 }
 
+.navbar-toggler:focus {
+    outline: none;
+}
+
 .form-text.text-muted.mt-2 a {
     text-decoration: none; /* Remove o sublinhado */
 }
