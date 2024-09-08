@@ -26,6 +26,9 @@ document.getElementById('videoForm').addEventListener('submit', function(event) 
         document.getElementById('thumbnail').src = data.thumbnail;
         document.getElementById('videoTitle').innerText = data.title;
 
+        // Scroll automático para a div 'videoInfo'
+        document.getElementById('videoInfo').scrollIntoView({ behavior: 'smooth' });
+
         const formatSelector = document.getElementById('formatSelector');
         formatSelector.innerHTML = '';
         data.formats.forEach(format => {
@@ -37,6 +40,7 @@ document.getElementById('videoForm').addEventListener('submit', function(event) 
         });
 
         document.getElementById('statusMessage').innerText = 'Selecione a qualidade e clique em Baixar.';
+
         document.getElementById('downloadButton').addEventListener('click', function() {
             const formatId = formatSelector.value;
             document.getElementById('statusMessage').innerText = 'Iniciando o download...';

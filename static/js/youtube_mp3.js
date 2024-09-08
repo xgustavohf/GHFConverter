@@ -16,7 +16,11 @@ document.getElementById('audioForm').addEventListener('submit', function(event) 
         if (data.error) {
             alert('Erro: ' + data.error);
         } else {
-            document.getElementById('audioInfo').style.display = 'block';
+            // Exibe o bloco de informações de áudio
+            const audioInfoDiv = document.getElementById('audioInfo');
+            audioInfoDiv.style.display = 'block';
+
+            // Atualiza a thumbnail e o título
             document.getElementById('thumbnail').src = data.thumbnail;
             document.getElementById('audioTitle').textContent = data.title;
 
@@ -28,6 +32,12 @@ document.getElementById('audioForm').addEventListener('submit', function(event) 
                 option.value = format.url.split('/').pop(); // Apenas o nome do arquivo
                 option.textContent = `${format.quality} (${format.bitrate} kbps)`;
                 formatSelector.appendChild(option);
+            });
+
+            // Scroll automático para a div "audioInfo"
+            audioInfoDiv.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
             });
         }
     })

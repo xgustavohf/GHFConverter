@@ -15,6 +15,9 @@ document.getElementById('videoForm').addEventListener('submit', function(event) 
             document.getElementById('videoTitle').innerText = data.title; // Atualiza o título do vídeo
             document.getElementById('downloadButton').dataset.videoUrl = data.video_url; // Armazena a URL do vídeo
             document.getElementById('downloadButton').dataset.videoTitle = data.title; // Armazena o título do vídeo
+
+            // Scrolla automaticamente para a div 'videoInfo'
+            document.getElementById('videoInfo').scrollIntoView({ behavior: 'smooth' });
         }
     })
     .catch(error => {

@@ -22,6 +22,10 @@ document.getElementById('videoForm').addEventListener('submit', function(event) 
             document.getElementById('videoThumbnail').src = data.thumbnail_url;
             document.getElementById('videoTitle').textContent = data.title;
             document.getElementById('videoInfo').style.display = 'block';
+
+            // Adiciona o scroll automático para a div 'videoInfo'
+            document.getElementById('videoInfo').scrollIntoView({ behavior: 'smooth' });
+
             document.getElementById('urlInput').value = formData.get('url');
         }
     })

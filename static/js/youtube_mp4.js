@@ -37,6 +37,10 @@ document.getElementById('videoForm').addEventListener('submit', function(event) 
         });
 
         document.getElementById('statusMessage').innerText = 'Selecione a qualidade e clique em Baixar.';
+
+        // Scroll automático para o elemento videoInfo
+        document.getElementById('videoInfo').scrollIntoView({ behavior: 'smooth' });
+
         document.getElementById('downloadButton').addEventListener('click', function() {
             const formatId = formatSelector.value;
             document.getElementById('statusMessage').innerText = 'Iniciando o download...';
