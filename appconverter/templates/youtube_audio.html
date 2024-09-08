@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Baixador de Áudio do YouTube</title>
+    <title>Conversor de vídeos do YouTube para MP3</title>
     <link rel="icon" href="{% static 'images/ghfconvert.ico' %}" type="image/x-icon">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
@@ -18,8 +18,8 @@
     {% include 'menu.html' %}
 
     <div class="container text-center mt-5">
-        <h1 class="display-4">Baixador de áudio do <span style="color: rgb(3, 142, 255);">YouTube</span></h1>
-        <p class="lead">Baixe e salve áudios do YouTube gratuitamente</p>
+        <h1 class="display-4">Conversor do <span style="color: rgb(3, 142, 255);">YouTube </span>para MP3</h1>
+        <p class="lead">Baixe e salve vídeos do YouTube em MP3, gratuitamente.</p>
         <form id="audioForm" method="post" class="form-inline justify-content-center mt-4">
             {% csrf_token %}
             <div class="input-group w-100">
@@ -51,7 +51,7 @@
         </div>
     </div>
     <div class="instructions text-center">
-        <h2>Como baixar o áudio do <span style="color: rgb(3, 142, 255);">YouTube</span>?</h2>
+        <h2>Como baixar vídeos do <span style="color: rgb(3, 142, 255);">YouTube </span>em MP3?</h2>
         <div id="instructionsCarousel" class="carousel slide d-md-none" data-ride="carousel" data-interval="3000">
             <div class="carousel-inner">
                 <div class="carousel-item active">
