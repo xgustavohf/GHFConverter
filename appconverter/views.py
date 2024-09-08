@@ -138,13 +138,18 @@ def instagram_download_view(request):
             return JsonResponse({'error': 'URL não fornecida'}, status=400)
 
         loader = instaloader.Instaloader()
+
+        # Configurando o User-Agent diretamente na sessão de requests do Instaloader
+        user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
+        loader.context._session.headers.update({'User-Agent': user_agent})
+
         try:
             shortcode = url.split('/')[-2]
             post = instaloader.Post.from_shortcode(loader.context, shortcode)
             video_url = post.video_url
             title = post.caption  # Use 'caption' para a descrição do vídeo
 
-            # Limite o título a 50 caracteres
+            # Limite o título a 30 caracteres
             if len(title) > 30:
                 title = title[:30] + '...'  # Adiciona '...' se o título for truncado
 
