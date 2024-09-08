@@ -139,8 +139,8 @@ def instagram_download_view(request):
 
         loader = instaloader.Instaloader()
 
-        # Configurando o User-Agent diretamente na sessão de requests do Instaloader
-        user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
+        # Atualizando o User-Agent para um mais recente
+        user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'
         loader.context._session.headers.update({'User-Agent': user_agent})
 
         try:
