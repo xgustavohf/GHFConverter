@@ -67,17 +67,6 @@ WSGI_APPLICATION = 'ghfconverter.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-'''DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'tarifador',
-        'USER': 'tarifador_user',
-        'PASSWORD': 'jYbsZROd2gvYfcSv4axgWOaoTb6j50Aa',
-        'HOST': 'dpg-cq67uacs1f4s73du3in0-a.oregon-postgres.render.com',
-        'PORT': '5432',
-    }
-}'''
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
