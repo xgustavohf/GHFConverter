@@ -1,6 +1,12 @@
 # GHFConverter
 
 Este projeto consiste em um aplicativo web desenvolvido em Django que permite aos usuários baixar vídeos de diversas plataformas online, como YouTube, Facebook e Instagram. Através de uma interface intuitiva, o usuário pode inserir a URL do vídeo desejado, selecionar o formato e iniciar o download.
+
+# Objetivo
+
+Oferecer uma solução prática e eficiente para quem precisa baixar vídeos da internet, com um foco em usabilidade e flexibilidade.
+
+Em resumo, este projeto é uma aplicação web que simplifica o processo de download de vídeos, tornando-o acessível a usuários com diferentes níveis de conhecimento técnico.
  
 # Funcionalidades Principais
 
@@ -20,12 +26,8 @@ Este projeto consiste em um aplicativo web desenvolvido em Django que permite ao
 
 # Tecnologias utilizadas
 
-Django: Framework Python para desenvolvimento web.
-HTML/CSS/JavaScript: Para a construção da interface do usuário.
-Python: Linguagem de programação principal do projeto.
+* Django: Framework Python para desenvolvimento web.
+* HTML/CSS/JavaScript: Para a construção da interface do usuário.
+* Python: Linguagem de programação principal do projeto.
 
-# Objetivo
 
-Oferecer uma solução prática e eficiente para quem precisa baixar vídeos da internet, com um foco em usabilidade e flexibilidade.
-
-Em resumo, este projeto é uma aplicação web que simplifica o processo de download de vídeos, tornando-o acessível a usuários com diferentes níveis de conhecimento técnico.
