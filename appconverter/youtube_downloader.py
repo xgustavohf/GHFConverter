@@ -18,7 +18,7 @@ def get_video_info(url):
                 {
                     'format_id': f.get('format_id'),
                     'format_note': f.get('format_note'),
-                    'filesize': f.get('filesize', 0)  # Tamanho do arquivo em bytes
+                    'filesize': f.get('filesize', 0)  
                 }
                 for f in info_dict.get('formats', [])
                 if f.get('ext') == 'mp4' and f.get('format_note') in desired_resolutions
@@ -31,7 +31,7 @@ def get_video_info(url):
 def download_video(url, format_id, title):
     ydl_opts = {
         'format': f'{format_id}+bestaudio/best',
-        'outtmpl': f'media/{title}.%(ext)s',  # Salvar na pasta media com o título do vídeo
+        'outtmpl': f'media/{title}.%(ext)s',  
         'noplaylist': True,
         'merge_output_format': 'mp4',
         'ffmpeg_location': ffmpeg.get_ffmpeg_exe(),
@@ -41,6 +41,6 @@ def download_video(url, format_id, title):
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(url, download=True)
             filename = ydl.prepare_filename(info_dict).split('/')[-1]
-            return filename  # Retorna o nome do arquivo
+            return filename 
     except DownloadError as e:
         raise ValueError('Erro ao baixar o vídeo. Verifique a URL e o formato.')

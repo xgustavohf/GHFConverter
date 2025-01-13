@@ -87,7 +87,7 @@ def download_video_view(request):
         
         try:
             info = get_video_info(url)
-            title = info.get('title', 'video').replace(' ', '_')  # Pega o título e remove espaços
+            title = info.get('title', 'video').replace(' ', '_')  
             filename = download_video(url, format_id, title)
             file_path = os.path.join(settings.MEDIA_ROOT, filename)
             response = FileResponse(open(file_path, 'rb'), as_attachment=True, filename=filename)
@@ -139,7 +139,6 @@ def instagram_download_view(request):
 
         loader = instaloader.Instaloader()
 
-        # Atualizando o User-Agent para um mais recente
         user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'
         loader.context._session.headers.update({'User-Agent': user_agent})
 
@@ -147,14 +146,12 @@ def instagram_download_view(request):
             shortcode = url.split('/')[-2]
             post = instaloader.Post.from_shortcode(loader.context, shortcode)
             video_url = post.video_url
-            title = post.caption  # Use 'caption' para a descrição do vídeo
+            title = post.caption  
 
-            # Limite o título a 30 caracteres
             if len(title) > 30:
-                title = title[:30] + '...'  # Adiciona '...' se o título for truncado
+                title = title[:30] + '...' 
 
-            thumbnail_url = post.url  # Ajuste para obter a thumbnail correta
-
+            thumbnail_url = post.url  
             return JsonResponse({'title': title, 'thumbnail': thumbnail_url, 'video_url': video_url})
 
         except Exception as e:
@@ -172,7 +169,6 @@ def facebook(request):
             return JsonResponse({'error': 'URL não fornecida'}, status=400)
         
         try:
-            # Obtém as informações do vídeo (URL, título e thumbnail)
             video_url, title, thumbnail_url = get_facebook_video_info(url)
             
             return JsonResponse({'title': title, 'thumbnail_url': thumbnail_url})
@@ -209,7 +205,6 @@ def youtube_audio(request):
         if not url:
             return JsonResponse({'error': 'URL não fornecida'}, status=400)
 
-        # Obter informações do vídeo sem fazer o download
         ydl_opts = {
             'format': 'bestaudio/best',
             'noplaylist': True,
@@ -219,11 +214,9 @@ def youtube_audio(request):
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 info = ydl.extract_info(url, download=False)
                 
-                # Iniciar o download em segundo plano
                 download_thread = threading.Thread(target=download_and_save_audio, args=(url, info['id'], info.get('title')))
                 download_thread.start()
 
-                # Preparar a resposta com informações do vídeo
                 formats = [{
                     'url': f'/download/{sanitize_filename(info["title"])}.mp3',
                     'quality': 'alta',
@@ -242,7 +235,6 @@ def youtube_audio(request):
 
 
 def sanitize_filename(filename):
-    # Remove caracteres não ASCII e substitui espaços e caracteres especiais por _
     filename = unicodedata.normalize('NFKD', filename).encode('ASCII', 'ignore').decode('ASCII')
     filename = re.sub(r'[^\w\s-]', '', filename).strip()
     filename = re.sub(r'[-\s]+', '_', filename)
@@ -275,10 +267,10 @@ def serve_audio(request, filename):
     file_path = os.path.join(settings.MEDIA_ROOT, filename)
     if os.path.exists(file_path):
         response = FileResponse(open(file_path, 'rb'), content_type='audio/mpeg')
-        remove_file_later(file_path)  # Remover o arquivo após o download
+        remove_file_later(file_path) 
         return response
     else:
-        print(f"Arquivo não encontrado: {file_path}")  # Para depuração
+        print(f"Arquivo não encontrado: {file_path}") 
         raise Http404("Arquivo não encontrado")
 
 def check_download_status(request, filename):
