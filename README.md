@@ -1,90 +1,143 @@
-# GHFConverter - Documentação Técnica
+# GHFConverter 🎥➡️📁
 
-![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
-![Django](https://img.shields.io/badge/Django-4.0%2B-green)
-![License](https://img.shields.io/badge/License-MIT-orange)
+![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
+![Django Version](https://img.shields.io/badge/django-4.0%2B-green)
+![License](https://img.shields.io/badge/license-MIT-red)
 
-Aplicação web para download de vídeos e áudio de plataformas sociais com processamento assíncrono.
+Aplicação web para conversão e download de conteúdo multimídia de plataformas sociais.
 
-## Índice
-1. [Visão Geral](#visão-geral)
-2. [Funcionalidades](#funcionalidades)
-3. [Tecnologias](#tecnologias)
-4. [Instalação](#instalação)
-5. [Arquitetura](#arquitetura)
-6. [Fluxo de Trabalho](#fluxo-de-trabalho)
-7. [Segurança e Otimização](#segurança-e-otimização)
-8. [Tratamento de Erros](#tratamento-de-erros)
-9. [Contribuição](#contribuição)
-10. [Roadmap](#roadmap)
-
----
-
-## Visão Geral <a name="visão-geral"></a>
-
-Solução Django para download de conteúdo multimídia de:
-- **YouTube**: MP3 (áudio) e MP4 (vídeo)
-- **Facebook/Instagram**: MP4 (vídeo apenas)
-
-**Objetivo Principal**: Fornecer interface intuitiva para conversão de mídias online com:
-- Processamento em segundo plano
-- Gerenciamento automatizado de arquivos
-- Suporte multiplataforma
+## 📌 Índice
+- [Visão Geral](#-visão-geral)
+- [Funcionalidades](#-funcionalidades)
+- [Tecnologias](#-tecnologias)
+- [Instalação](#-instalação)
+- [Arquitetura](#-arquitetura)
+- [Fluxo de Trabalho](#-fluxo-de-trabalho)
+- [Segurança](#-segurança)
+- [Contribuição](#-contribuição)
+- [Roadmap](#-roadmap)
 
 ---
 
-## Funcionalidades <a name="funcionalidades"></a>
+## 🌐 Visão Geral
 
-| Funcionalidade       | Descrição                                  | Plataformas Suportadas       |
-|----------------------|--------------------------------------------|------------------------------|
-| Download MP4         | Vídeo em diversas resoluções              | YouTube, Facebook, Instagram |
-| Download MP3         | Áudio em qualidade 128kbps                | YouTube                      |
-| Pré-visualização     | Exibe título, thumbnail e duração         | Todas as plataformas         |
-| Filas Assíncronas    | Processamento não-bloqueante usando threads | -                           |
-| Auto-limpeza         | Remove arquivos após 24 horas             | -                           |
+Solução Django para download de conteúdo de:
+- **YouTube**: MP3 (128kbps) e MP4 (até 4K)
+- **Facebook/Instagram**: MP4 (qualidade original)
+
+**Recursos Principais**:
+✅ Processamento assíncrono  
+✅ Pré-visualização de vídeos  
+✅ Auto-limpeza de arquivos  
+✅ Interface responsiva  
 
 ---
 
-## Tecnologias <a name="tecnologias"></a>
+## 🚀 Funcionalidades
 
-### Backend
+| Plataforma   | Formatos Suportados | Resoluções          |
+|--------------|---------------------|---------------------|
+| YouTube      | MP3, MP4           | 144p a 4K           |
+| Facebook     | MP4                | Original            |
+| Instagram    | MP4                | Até 1080p           |
+
+**Features Adicionais**:
+- Seleção de qualidade manual
+- Geração de thumbnail
+- Tempo estimado de download
+- Histórico de conversões
+
+---
+
+## 💻 Tecnologias
+
+**Backend**:
+- Python 3.10
+- Django 4.2
+- yt-dlp 2023.7.6
+- Celery 5.3.1 (Redis broker)
+
+**Frontend**:
+- Bootstrap 5.3
+- HTMX 1.9.4
+- MediaElement.js
+
+**Infra**:
+- Nginx
+- Docker
+- PostgreSQL
+
+---
+
+## 📥 Instalação
+
+### Pré-requisitos
 - Python 3.8+
-- Django 4.0+
-- yt-dlp (wrapper do youtube-dl)
-- Celery (opcional para tarefas assíncronas)
-
-### Frontend
-- Bootstrap 5
-- HTML5 Media APIs
-- JavaScript Fetch API
-
-### Armazenamento
-- Sistema de arquivos local
-- Configurável para AWS S3
-
----
-
-## Instalação <a name="instalação"></a>
+- FFmpeg
+- Redis Server
 
 ```bash
-# Clonar repositório
+# Clone o repositório
 git clone https://github.com/seu-usuario/GHFConverter.git
 cd GHFConverter
 
-# Ambiente virtual
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-venv\Scripts\activate     # Windows
+# Crie e ative o ambiente virtual
+python -m venv .venv
+source .venv/bin/activate  # Linux/Mac
+.venv\Scripts\activate     # Windows
 
-# Instalar dependências
+# Instale as dependências
 pip install -r requirements.txt
 
-# Configurar ambiente
+# Configure as variáveis de ambiente
 cp .env.example .env
-# Editar .env com suas credenciais
+nano .env  # Edite com suas credenciais
 
-# Migrações
+# Execute as migrações
 python manage.py migrate
 
-# Executar
+# Inicie o servidor
 python manage.py runserver
+```
+## 🏗 Arquitetura
+
+sequenceDiagram
+    participant Usuário
+    participant Frontend
+    participant Backend
+    participant yt-dlp
+    participant Armazenamento
+    
+    Usuário->>Frontend: Submete URL
+    Frontend->>Backend: POST /api/process
+    Backend->>yt-dlp: Extrai metadados
+    yt-dlp-->>Backend: Retorna info
+    Backend->>Frontend: Opções de download
+    Usuário->>Frontend: Seleciona formato
+    Frontend->>Backend: POST /api/download
+    Backend->>Celery: Inicia task
+    Celery->>yt-dlp: Processa download
+    yt-dlp->>Armazenamento: Salva arquivo
+    Backend-->>Frontend: Link temporário
+    Frontend-->>Usuário: Download disponível
+
+## 🔒 Segurança
+
+**Medidas Implementadas:**
+- Validação de URL com regex
+- Sanitização de inputs
+- Rate limiting (10 requests/min)
+- Timeout de 5 minutos para downloads
+- Arquivos temporários com hash SHA-256
+- Exclusão automática após 24h
+
+## 🤝 Contribuição
+
+1. Faça um fork do projeto
+2. Crie uma branch descritiva:
+   > git checkout -b feat/nova-funcionalidade
+3. Commit suas mudanças:
+   > git commit -m "feat: Adiciona suporte ao Vimeo"
+4. Push para a branch
+   > git push origin feat/nova-funcionalidade
+5. Abra um Pull Request  
