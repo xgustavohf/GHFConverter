@@ -15,7 +15,6 @@ Aplicação web para conversão e download de conteúdo multimídia de plataform
 - [Fluxo de Trabalho](#-fluxo-de-trabalho)
 - [Segurança](#-segurança)
 - [Contribuição](#-contribuição)
-- [Roadmap](#-roadmap)
 
 ---
 
@@ -101,6 +100,7 @@ python manage.py runserver
 ```
 ## 🏗 Arquitetura
 
+```bash
 sequenceDiagram
     participant Usuário
     participant Frontend
@@ -120,7 +120,7 @@ sequenceDiagram
     yt-dlp->>Armazenamento: Salva arquivo
     Backend-->>Frontend: Link temporário
     Frontend-->>Usuário: Download disponível
-
+```
 ## 🔒 Segurança
 
 **Medidas Implementadas:**
