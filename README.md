@@ -1,33 +1,90 @@
-# GHFConverter
+# GHFConverter - Documentação Técnica
 
-Este projeto consiste em um aplicativo web desenvolvido em Django que permite aos usuários baixar vídeos de diversas plataformas online, como YouTube, Facebook e Instagram. Através de uma interface intuitiva, o usuário pode inserir a URL do vídeo desejado, selecionar o formato e iniciar o download.
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
+![Django](https://img.shields.io/badge/Django-4.0%2B-green)
+![License](https://img.shields.io/badge/License-MIT-orange)
 
-# Objetivo
+Aplicação web para download de vídeos e áudio de plataformas sociais com processamento assíncrono.
 
-Oferecer uma solução prática e eficiente para quem precisa baixar vídeos da internet, com um foco em usabilidade e flexibilidade.
+## Índice
+1. [Visão Geral](#visão-geral)
+2. [Funcionalidades](#funcionalidades)
+3. [Tecnologias](#tecnologias)
+4. [Instalação](#instalação)
+5. [Arquitetura](#arquitetura)
+6. [Fluxo de Trabalho](#fluxo-de-trabalho)
+7. [Segurança e Otimização](#segurança-e-otimização)
+8. [Tratamento de Erros](#tratamento-de-erros)
+9. [Contribuição](#contribuição)
+10. [Roadmap](#roadmap)
 
-Em resumo, este projeto é uma aplicação web que simplifica o processo de download de vídeos, tornando-o acessível a usuários com diferentes níveis de conhecimento técnico.
- 
-# Funcionalidades Principais
+---
 
-* Download de vídeos: A aplicação permite baixar vídeos de diversas plataformas (YouTube, Facebook, Instagram) com diferentes formatos e resoluções.
-* Extração de informações: Antes do download, a aplicação extrai informações como título, thumbnail e formatos disponíveis do vídeo.
-* Processamento assíncrono: O download dos vídeos é realizado em segundo plano para não bloquear a resposta ao usuário.
-* Interface amigável: A aplicação possui uma interface web intuitiva para o usuário inserir a URL do vídeo e iniciar o download.
-* Gerenciamento de arquivos: A aplicação gerencia a criação, armazenamento e remoção dos arquivos baixados, incluindo a limpeza automática após um determinado período.
+## Visão Geral <a name="visão-geral"></a>
 
-# Destaques do Código
+Solução Django para download de conteúdo multimídia de:
+- **YouTube**: MP3 (áudio) e MP4 (vídeo)
+- **Facebook/Instagram**: MP4 (vídeo apenas)
 
-* Uso de yt_dlp: A biblioteca yt_dlp é utilizada para extrair informações e baixar vídeos de diversas plataformas, incluindo YouTube e Facebook.
-* Tratamento de erros: O código inclui tratamento de erros para lidar com situações como URLs inválidas, falhas no download, etc.
-* Personalização de formatos: A aplicação permite ao usuário escolher o formato do vídeo a ser baixado.
-* Otimização de desempenho: O uso de threads e tarefas assíncronas contribui para um melhor desempenho da aplicação.
-* Segurança: A aplicação remove os arquivos baixados após um determinado período, contribuindo para a segurança e otimização do armazenamento.
+**Objetivo Principal**: Fornecer interface intuitiva para conversão de mídias online com:
+- Processamento em segundo plano
+- Gerenciamento automatizado de arquivos
+- Suporte multiplataforma
 
-# Tecnologias utilizadas
+---
 
-* Django: Framework Python para desenvolvimento web.
-* HTML/CSS/JavaScript: Para a construção da interface do usuário.
-* Python: Linguagem de programação principal do projeto.
+## Funcionalidades <a name="funcionalidades"></a>
 
+| Funcionalidade       | Descrição                                  | Plataformas Suportadas       |
+|----------------------|--------------------------------------------|------------------------------|
+| Download MP4         | Vídeo em diversas resoluções              | YouTube, Facebook, Instagram |
+| Download MP3         | Áudio em qualidade 128kbps                | YouTube                      |
+| Pré-visualização     | Exibe título, thumbnail e duração         | Todas as plataformas         |
+| Filas Assíncronas    | Processamento não-bloqueante usando threads | -                           |
+| Auto-limpeza         | Remove arquivos após 24 horas             | -                           |
 
+---
+
+## Tecnologias <a name="tecnologias"></a>
+
+### Backend
+- Python 3.8+
+- Django 4.0+
+- yt-dlp (wrapper do youtube-dl)
+- Celery (opcional para tarefas assíncronas)
+
+### Frontend
+- Bootstrap 5
+- HTML5 Media APIs
+- JavaScript Fetch API
+
+### Armazenamento
+- Sistema de arquivos local
+- Configurável para AWS S3
+
+---
+
+## Instalação <a name="instalação"></a>
+
+```bash
+# Clonar repositório
+git clone https://github.com/seu-usuario/GHFConverter.git
+cd GHFConverter
+
+# Ambiente virtual
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+venv\Scripts\activate     # Windows
+
+# Instalar dependências
+pip install -r requirements.txt
+
+# Configurar ambiente
+cp .env.example .env
+# Editar .env com suas credenciais
+
+# Migrações
+python manage.py migrate
+
+# Executar
+python manage.py runserver
